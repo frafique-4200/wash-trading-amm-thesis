@@ -1,0 +1,602 @@
+-- =====================================================================
+-- QUERY 11 — REVISED
+-- RECONSTRUCT THE PAPER-PERIOD NON-ABNORMAL UNISWAP V2 POOL SET
+-- AND FIND MATCHED CONTROLS FOR ECO-USDT AND wCELO
+-- =====================================================================
+--
+-- PURPOSE
+--
+-- The AMM paper examined 98,945 Uniswap V2 and V3 pools and reported
+-- 30,725 pools containing detected wash trades.
+--
+-- The authors published the abnormal-pool addresses, but they did not
+-- publish a separate list containing all pools not classified as
+-- abnormal.
+--
+-- This query reconstructs the relevant Uniswap V2 control universe:
+--
+--   1. Obtain official Uniswap V2 pools created during the paper period.
+--   2. Remove every pool appearing in abnormal_pools.csv.
+--   3. Count Swap events in the same observation periods used for the
+--      ECO-USDT and wCELO suspicious pools.
+--   4. Rank possible controls by similarity in raw-Swap count.
+--
+-- The resulting candidates are "reference-negative" pools:
+--
+--   They are absent from the paper's abnormal-pool dataset.
+--
+-- This does not prove that they are completely free from wash trading.
+-- =====================================================================
+
+
+-- =====================================================================
+-- STEP 1 — DEFINE THE AMM PAPER'S BLOCK RANGE
+-- =====================================================================
+--
+-- The paper collected Ethereum data from:
+--
+--   Block 10,000,835: 4 May 2020
+--   Block 15,400,000: 24 August 2022
+--
+-- BETWEEN includes both boundary blocks.
+-- =====================================================================
+
+WITH paper_limits AS (
+
+    SELECT
+        CAST(10000835 AS BIGINT) AS starting_block,
+        CAST(15400000 AS BIGINT) AS ending_block
+),
+
+
+-- =====================================================================
+-- STEP 2 — RECONSTRUCT THE OFFICIAL UNISWAP V2 POOL UNIVERSE
+-- =====================================================================
+--
+-- The Uniswap V2 Factory contract emits a PairCreated event whenever
+-- it creates a new liquidity pool.
+--
+-- Dune stores these events in:
+--
+--   uniswap_v2_ethereum.Factory_evt_PairCreated
+--
+-- Relevant columns:
+--
+--   pair
+--       Address of the newly created Uniswap V2 liquidity pool.
+--
+--   token0 and token1
+--       Addresses of the two tokens traded in that pool.
+--
+--   evt_block_number
+--       Ethereum block in which the pool was created.
+--
+-- Limiting PairCreated events to the paper's block range reconstructs
+-- the official Uniswap V2 pool universe available during that period.
+-- =====================================================================
+
+all_paper_period_v2_pools AS (
+
+    SELECT DISTINCT
+        p.pair AS pool,
+
+        p.token0,
+
+        p.token1,
+
+        p.evt_block_number AS creation_block
+
+    FROM uniswap_v2_ethereum.Factory_evt_PairCreated AS p
+
+    CROSS JOIN paper_limits AS limits
+
+    WHERE p.evt_block_number
+        BETWEEN limits.starting_block AND limits.ending_block
+),
+
+
+-- =====================================================================
+-- STEP 3 — LOAD THE PAPER'S PUBLISHED ABNORMAL-POOL ADDRESSES
+-- =====================================================================
+--
+-- abnormal_pools.csv contains the pool addresses published by the
+-- paper's authors as pools having detected wash trades.
+--
+-- DISTINCT prevents duplicate addresses from affecting later joins.
+-- =====================================================================
+
+published_abnormal_pools AS (
+
+    SELECT DISTINCT
+        pool
+
+    FROM dune.basilisk42004190.dataset_abnormal_pools
+),
+
+
+-- =====================================================================
+-- STEP 4 — DERIVE THE NON-ABNORMAL UNISWAP V2 POOL SET
+-- =====================================================================
+--
+-- This step compares every official paper-period Uniswap V2 pool with
+-- the published abnormal list.
+--
+-- LEFT JOIN attempts to find an abnormal-list match for each pool.
+--
+-- WHERE abnormal.pool IS NULL keeps only addresses for which no match
+-- was found.
+--
+-- The resulting pools are absent from the published abnormal set.
+-- They are not independently proven to be wash-trading-free.
+-- =====================================================================
+
+eligible_non_abnormal_v2_pools AS (
+
+    SELECT
+        v2.pool,
+
+        v2.token0,
+
+        v2.token1,
+
+        v2.creation_block
+
+    FROM all_paper_period_v2_pools AS v2
+
+    LEFT JOIN published_abnormal_pools AS abnormal
+
+        ON v2.pool = abnormal.pool
+
+    WHERE abnormal.pool IS NULL
+),
+
+
+-- =====================================================================
+-- STEP 5 — DEFINE THE TWO SUSPICIOUS-POOL MATCHING TARGETS
+-- =====================================================================
+--
+-- Each target contains:
+--
+--   comparison_name
+--       Identifies which suspicious pool requires a control.
+--
+--   suspicious_pool
+--       Address of the suspicious pool.
+--
+--   observation_start and observation_end
+--       First and last raw-Swap timestamps obtained from Query 10.1.
+--
+--   target_swap_count
+--       Number of raw Swap events in the suspicious pool during the
+--       paper-period observation window.
+-- =====================================================================
+
+control_targets AS (
+
+    SELECT
+        'ECO-USDT control' AS comparison_name,
+
+        0x4dfcb1482878ededccd6cc19f9d043cdd56ffd06
+            AS suspicious_pool,
+
+        TIMESTAMP '2020-11-09 12:13:04'
+            AS observation_start,
+
+        TIMESTAMP '2022-08-23 10:54:06'
+            AS observation_end,
+
+        CAST(9449 AS BIGINT)
+            AS target_swap_count
+
+    UNION ALL
+
+    SELECT
+        'wCELO control' AS comparison_name,
+
+        0x8d1ca95559abed542ef4402a252974221b5e1036
+            AS suspicious_pool,
+
+        TIMESTAMP '2020-12-17 21:19:44'
+            AS observation_start,
+
+        TIMESTAMP '2022-07-25 22:08:54'
+            AS observation_end,
+
+        CAST(11417 AS BIGINT)
+            AS target_swap_count
+),
+
+
+-- =====================================================================
+-- STEP 6 — ADD THE SUSPICIOUS POOLS' TOKEN ADDRESSES
+-- =====================================================================
+--
+-- Joining the target pools with the reconstructed factory data gives us
+-- the token0 and token1 addresses of each suspicious pool.
+--
+-- These fields allow us to determine later whether a proposed control
+-- shares a token with its corresponding suspicious pool.
+-- =====================================================================
+
+target_details AS (
+
+    SELECT
+        target.comparison_name,
+
+        target.suspicious_pool,
+
+        target.observation_start,
+
+        target.observation_end,
+
+        target.target_swap_count,
+
+        pool.token0 AS suspicious_token0,
+
+        pool.token1 AS suspicious_token1
+
+    FROM control_targets AS target
+
+    INNER JOIN all_paper_period_v2_pools AS pool
+
+        ON target.suspicious_pool = pool.pool
+),
+
+
+-- =====================================================================
+-- STEP 7 — COUNT RAW SWAPS FOR EVERY ELIGIBLE CONTROL POOL
+-- =====================================================================
+--
+-- pair_evt_swap contains the raw Swap events emitted by Uniswap V2
+-- liquidity pools.
+--
+-- For every target observation period, this step:
+--
+--   1. examines Swap events inside that exact time interval;
+--   2. enforces the paper's block range;
+--   3. retains only pools from the reconstructed non-abnormal V2 set;
+--   4. counts raw Swap events for each eligible pool;
+--   5. records its first and last observed Swap;
+--   6. counts how many different calendar days contained trading.
+--
+-- Active-day information helps distinguish:
+--
+--   - activity spread across the observation period; and
+--   - activity concentrated into only a few days.
+-- =====================================================================
+
+control_pool_activity AS (
+
+    SELECT
+        target.comparison_name,
+
+        target.suspicious_pool,
+
+        target.observation_start,
+
+        target.observation_end,
+
+        target.target_swap_count,
+
+        target.suspicious_token0,
+
+        target.suspicious_token1,
+
+        eligible.pool AS control_pool,
+
+        eligible.token0 AS control_token0,
+
+        eligible.token1 AS control_token1,
+
+        eligible.creation_block AS control_creation_block,
+
+        COUNT(*) AS control_swap_count,
+
+        MIN(swap.evt_block_time) AS control_first_swap,
+
+        MAX(swap.evt_block_time) AS control_last_swap,
+
+        COUNT(
+            DISTINCT CAST(swap.evt_block_time AS DATE)
+        ) AS control_active_days
+
+    FROM target_details AS target
+
+    INNER JOIN uniswap_v2_ethereum.pair_evt_swap AS swap
+
+        ON swap.evt_block_time >= target.observation_start
+
+       AND swap.evt_block_time <= target.observation_end
+
+       AND swap.evt_block_number BETWEEN 10000835 AND 15400000
+
+    INNER JOIN eligible_non_abnormal_v2_pools AS eligible
+
+        ON swap.contract_address = eligible.pool
+
+    GROUP BY
+        target.comparison_name,
+
+        target.suspicious_pool,
+
+        target.observation_start,
+
+        target.observation_end,
+
+        target.target_swap_count,
+
+        target.suspicious_token0,
+
+        target.suspicious_token1,
+
+        eligible.pool,
+
+        eligible.token0,
+
+        eligible.token1,
+
+        eligible.creation_block
+),
+
+
+-- =====================================================================
+-- STEP 8 — CALCULATE THE ACTIVITY DIFFERENCES
+-- =====================================================================
+--
+-- absolute_swap_difference
+--
+--     Absolute difference between the control candidate's Swap count
+--     and the suspicious pool's Swap count.
+--
+-- percentage_difference
+--
+--     Absolute difference expressed as a percentage of the suspicious
+--     pool's Swap count:
+--
+--         absolute difference
+--         ------------------- × 100
+--         target Swap count
+--
+-- shares_suspicious_pool_token
+--
+--     TRUE when the control pool and suspicious pool share at least one
+--     token address.
+--
+--     This does not automatically determine the final control. It gives
+--     us additional information for assessing token comparability.
+-- =====================================================================
+
+activity_differences AS (
+
+    SELECT
+        comparison_name,
+
+        suspicious_pool,
+
+        observation_start,
+
+        observation_end,
+
+        target_swap_count,
+
+        suspicious_token0,
+
+        suspicious_token1,
+
+        control_pool,
+
+        control_token0,
+
+        control_token1,
+
+        control_creation_block,
+
+        control_swap_count,
+
+        control_first_swap,
+
+        control_last_swap,
+
+        control_active_days,
+
+        ABS(control_swap_count - target_swap_count)
+            AS absolute_swap_difference,
+
+        100.0
+            * CAST(
+                ABS(control_swap_count - target_swap_count)
+                AS DOUBLE
+              )
+            / CAST(target_swap_count AS DOUBLE)
+            AS percentage_difference,
+
+        CASE
+
+            WHEN control_token0 = suspicious_token0
+              OR control_token0 = suspicious_token1
+              OR control_token1 = suspicious_token0
+              OR control_token1 = suspicious_token1
+
+            THEN TRUE
+
+            ELSE FALSE
+
+        END AS shares_suspicious_pool_token
+
+    FROM control_pool_activity
+),
+
+
+-- =====================================================================
+-- STEP 9 — RANK CANDIDATES BY SWAP-COUNT SIMILARITY
+-- =====================================================================
+--
+-- ROW_NUMBER ranks candidates separately for ECO-USDT and wCELO.
+--
+-- Rank 1 has the smallest raw-Swap-count difference.
+--
+-- The address is used as a secondary condition to produce stable
+-- ordering when two pools have the same difference.
+--
+-- This ranking creates a shortlist. Rank 1 will not automatically become
+-- the final control without examining its other characteristics.
+-- =====================================================================
+
+ranked_candidates AS (
+
+    SELECT
+        comparison_name,
+
+        suspicious_pool,
+
+        observation_start,
+
+        observation_end,
+
+        target_swap_count,
+
+        suspicious_token0,
+
+        suspicious_token1,
+
+        control_pool,
+
+        control_token0,
+
+        control_token1,
+
+        control_creation_block,
+
+        control_swap_count,
+
+        control_first_swap,
+
+        control_last_swap,
+
+        control_active_days,
+
+        absolute_swap_difference,
+
+        percentage_difference,
+
+        shares_suspicious_pool_token,
+
+        ROW_NUMBER() OVER (
+
+            PARTITION BY comparison_name
+
+            ORDER BY
+                absolute_swap_difference ASC,
+                control_pool ASC
+        ) AS candidate_rank
+
+    FROM activity_differences
+),
+
+
+-- =====================================================================
+-- STEP 10 — CALCULATE THE RECONSTRUCTED UNISWAP V2 SET SIZES
+-- =====================================================================
+--
+-- These values document:
+--
+--   1. Number of official Uniswap V2 pools created in the paper period.
+--   2. Number of those V2 pools appearing in the abnormal list.
+--   3. Number remaining in the reconstructed non-abnormal V2 set.
+--
+-- The remaining V2 count will not equal 68,220 because 68,220 includes
+-- both Uniswap V2 and Uniswap V3 pools.
+-- =====================================================================
+
+universe_counts AS (
+
+    SELECT
+
+        (
+            SELECT COUNT(*)
+            FROM all_paper_period_v2_pools
+        ) AS total_paper_period_v2_pools,
+
+        (
+            SELECT COUNT(*)
+
+            FROM all_paper_period_v2_pools AS v2
+
+            INNER JOIN published_abnormal_pools AS abnormal
+                ON v2.pool = abnormal.pool
+        ) AS published_abnormal_v2_pools,
+
+        (
+            SELECT COUNT(*)
+            FROM eligible_non_abnormal_v2_pools
+        ) AS reconstructed_non_abnormal_v2_pools
+)
+
+
+-- =====================================================================
+-- STEP 11 — RETURN THE TEN CLOSEST CANDIDATES FOR EACH TARGET
+-- =====================================================================
+--
+-- The result should contain:
+--
+--   10 ECO-USDT control candidates
+--   10 wCELO control candidates
+--
+-- The reconstructed-universe counts are repeated on each row for
+-- documentation.
+-- =====================================================================
+
+SELECT
+    ranked.comparison_name,
+
+    ranked.candidate_rank,
+
+    ranked.suspicious_pool,
+
+    ranked.observation_start,
+
+    ranked.observation_end,
+
+    ranked.target_swap_count,
+
+    ranked.suspicious_token0,
+
+    ranked.suspicious_token1,
+
+    ranked.control_pool,
+
+    ranked.control_token0,
+
+    ranked.control_token1,
+
+    ranked.control_creation_block,
+
+    ranked.control_swap_count,
+
+    ranked.absolute_swap_difference,
+
+    ranked.percentage_difference,
+
+    ranked.control_first_swap,
+
+    ranked.control_last_swap,
+
+    ranked.control_active_days,
+
+    ranked.shares_suspicious_pool_token,
+
+    counts.total_paper_period_v2_pools,
+
+    counts.published_abnormal_v2_pools,
+
+    counts.reconstructed_non_abnormal_v2_pools
+
+FROM ranked_candidates AS ranked
+
+CROSS JOIN universe_counts AS counts
+
+WHERE ranked.candidate_rank <= 10
+
+ORDER BY
+    ranked.comparison_name,
+    ranked.candidate_rank;

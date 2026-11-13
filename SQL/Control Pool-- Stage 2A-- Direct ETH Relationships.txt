@@ -1,0 +1,216 @@
+-- ============================================================
+-- CONTROL POOL
+-- STAGE 2A — DIRECT ETH RELATIONSHIPS
+--
+-- PURPOSE
+-- ============================================================
+--
+-- This query checks whether any of the transaction initiators
+-- appearing in the Stage-1 candidate groups have transferred
+-- ETH directly to one another.
+--
+-- This corresponds to the first part of the paper-derived
+-- entity-recognition procedure.
+--
+-- If two candidate initiators have exchanged ETH directly,
+-- their distance in the ETH-transfer graph is:
+--
+--     distance = 1
+--
+-- Since our replication uses:
+--
+--     k = 2
+--
+-- a direct relationship automatically satisfies the
+-- maximum-distance requirement for that pair.
+--
+-- IMPORTANT:
+--
+-- This query looks only at ETH transfers between candidate
+-- initiators.
+--
+-- It does NOT yet search for 2-hop relationships through
+-- intermediary addresses. That will be Stage 2B.
+--
+-- ============================================================
+
+
+
+-- ============================================================
+-- STEP 1 — DEFINE THE UNIQUE CANDIDATE INITIATORS
+-- ============================================================
+--
+-- These are the unique evt_tx_from addresses appearing in the
+-- 16 Stage-1 control-pool candidate groups.
+--
+-- evt_tx_from is used as the transaction initiator/trader in
+-- our replication.
+
+
+WITH target_senders(address) AS (
+
+    VALUES
+
+        (0x001182890a094820eb9d4401693ba0b9554f0f66),
+
+        (0x464587ee0cc5185686b29af7856b1d13647e93be),
+
+        (0x5ca96d732286cb108f4c9a052a6a169fcf75085b),
+
+        (0x67c0fc4b0490ab7e76c08c2bbd30fac0059bbc7a),
+
+        (0x769b100c21ccc90dc96ee15b1ff888a446dbe4d9),
+
+        (0x86254cb5a96c161e503d3255d67fdddec056fefe),
+
+        (0xa21caebd27a296678176ac886735bfd18f875b8f),
+
+        (0xb06c901509ee27937572382463a3ed59efcff595),
+
+        (0xb27179fb6d0412f0ec9873baf26dae3457c5494a),
+
+        (0xbcdbd77ef6cac72f2f68e41d86b3c2ab06a74ad5),
+
+        (0xcd6aef4b676eab653a439bf1a0b905abc7022be2),
+
+        (0xdec08cb92a506b88411da9ba290f3694be223c26),
+
+        (0xf21ce4a93534e725215bfec2a5e1add496e80469),
+
+        (0xfb3d12cd133957912404ca66d576e388631aae54)
+)
+
+
+
+-- ============================================================
+-- STEP 2 — SEARCH ETHEREUM TRANSACTIONS
+-- ============================================================
+--
+-- We search ethereum.transactions because ETH transfers are
+-- recorded through the transaction's:
+--
+--     from
+--     to
+--     value
+--
+-- fields.
+--
+-- We want transactions where:
+--
+--     sender is one target initiator
+--
+-- AND
+--
+--     receiver is another target initiator.
+--
+-- This identifies direct ETH-transfer relationships among the
+-- candidate traders.
+
+
+SELECT
+
+    -- Time when the ETH transaction was included on-chain.
+    t.block_time,
+
+
+    -- Ethereum block containing the transaction.
+    t.block_number,
+
+
+    -- Transaction identifier.
+    t.hash AS tx_hash,
+
+
+    -- Candidate initiator sending ETH.
+    t."from" AS sender_from,
+
+
+    -- Candidate initiator receiving ETH.
+    t."to" AS sender_to,
+
+
+    -- ETH amount in wei.
+    --
+    -- 1 ETH = 10^18 wei.
+    t.value AS eth_value_wei
+
+
+
+FROM ethereum.transactions t
+
+
+
+-- ============================================================
+-- STEP 3 — REQUIRE THE SENDER TO BE A CANDIDATE INITIATOR
+-- ============================================================
+
+INNER JOIN target_senders sender_list
+
+    ON t."from" = sender_list.address
+
+
+
+-- ============================================================
+-- STEP 4 — REQUIRE THE RECEIVER TO ALSO BE A CANDIDATE
+-- INITIATOR
+-- ============================================================
+--
+-- This ensures that we return only direct ETH relationships
+-- between addresses relevant to the Stage-1 candidate groups.
+
+
+INNER JOIN target_senders receiver_list
+
+    ON t."to" = receiver_list.address
+
+
+
+-- ============================================================
+-- STEP 5 — APPLY THE HISTORICAL BLOCK RANGE
+-- ============================================================
+--
+-- We use the same broad block interval used in the
+-- suspicious-pool entity analysis.
+--
+-- This keeps the control-pool and suspicious-pool entity
+-- analyses methodologically consistent.
+
+
+WHERE t.block_number BETWEEN 10000835 AND 15400000
+
+
+
+-- ============================================================
+-- STEP 6 — REQUIRE SUCCESSFUL TRANSACTIONS
+-- ============================================================
+--
+-- Failed Ethereum transactions should not create a valid ETH
+-- transfer relationship.
+
+
+  AND t.success = TRUE
+
+
+
+-- ============================================================
+-- STEP 7 — REQUIRE A POSITIVE ETH VALUE
+-- ============================================================
+--
+-- Transactions with value = 0 do not represent an ETH
+-- transfer and therefore should not create an ETH-transfer
+-- graph edge.
+
+
+  AND t.value > 0
+
+
+
+-- ============================================================
+-- STEP 8 — SORT CHRONOLOGICALLY
+-- ============================================================
+
+ORDER BY
+
+    t.block_number,
+
+    t.hash;

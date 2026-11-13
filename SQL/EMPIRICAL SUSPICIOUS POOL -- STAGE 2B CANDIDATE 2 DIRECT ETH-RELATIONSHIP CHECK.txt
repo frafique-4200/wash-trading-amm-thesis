@@ -1,0 +1,47 @@
+-- ============================================================
+-- EMPIRICAL SUSPICIOUS POOL
+-- STAGE 2B: CANDIDATE 2 DIRECT ETH-RELATIONSHIP CHECK
+--
+-- Candidate addresses:
+--
+-- A = 0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+-- B = 0x5b4b2f2a16dd1904babb54d49887416f4705512e
+--
+-- PURPOSE:
+-- Determine whether there is any direct ETH transfer
+-- between the two initiating addresses.
+--
+-- ETH direction does not matter for entity recognition,
+-- because the paper constructs an UNDIRECTED graph.
+-- ============================================================
+
+SELECT
+    hash,
+    block_number,
+    block_time,
+    "from",
+    "to",
+    value,
+    value / 1e18 AS eth_amount
+
+FROM ethereum.transactions
+
+WHERE value > 0
+
+  AND (
+        (
+          "from" = 0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+          AND
+          "to"   = 0x5b4b2f2a16dd1904babb54d49887416f4705512e
+        )
+
+        OR
+
+        (
+          "from" = 0x5b4b2f2a16dd1904babb54d49887416f4705512e
+          AND
+          "to"   = 0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+        )
+      )
+
+ORDER BY block_number;

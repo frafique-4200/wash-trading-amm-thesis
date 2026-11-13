@@ -1,0 +1,155 @@
+-- =====================================================================
+-- QUERY 10
+-- FIND THE COMPLETE TRADING PERIOD AND SWAP COUNTS
+-- FOR THE TWO ADDITIONAL SUSPICIOUS POOLS
+-- =====================================================================
+--
+-- PURPOSE
+--
+-- For each suspicious pool, this query calculates:
+--
+--   1. Total decoded trades in dex.trades
+--   2. First and last decoded-trade timestamps
+--   3. Total raw Uniswap V2 Swap events
+--   4. First and last raw-Swap timestamps
+--
+-- No time restriction is applied. Therefore, the query examines the
+-- complete trading history of each pool available in Dune.
+-- =====================================================================
+
+
+-- =====================================================================
+-- STEP 1 — DEFINE THE TWO SUSPICIOUS POOLS
+-- =====================================================================
+--
+-- This creates a temporary two-row table containing:
+--
+--   pool_name    = a readable name
+--   pool_address = the Ethereum address of the Uniswap V2 pool
+-- =====================================================================
+
+WITH target_pools AS (
+
+    SELECT
+        'BOND-USDC' AS pool_name,
+        0x6591c4bcd6d7a1eb4e537da8b78676c1576ba244
+            AS pool_address
+
+    UNION ALL
+
+    SELECT
+        'WHOLE' AS pool_name,
+        0xd4d090ac5b3729159f2f69fa1e8800c243ae5b58
+            AS pool_address
+),
+
+
+-- =====================================================================
+-- STEP 2 — COUNT THE DECODED TRADES
+-- =====================================================================
+--
+-- dex.trades is Dune's standardized DEX-trade table.
+--
+-- COUNT(d.tx_hash)
+--     Counts all decoded trade records belonging to the pool.
+--
+-- MIN(d.block_time)
+--     Finds the earliest decoded trade.
+--
+-- MAX(d.block_time)
+--     Finds the latest decoded trade.
+--
+-- LEFT JOIN ensures that the pool remains in the output even if no
+-- decoded trade is found.
+-- =====================================================================
+
+decoded_trades AS (
+
+    SELECT
+        p.pool_name,
+        p.pool_address,
+
+        COUNT(d.tx_hash) AS number_of_decoded_trades,
+
+        MIN(d.block_time) AS first_decoded_trade,
+
+        MAX(d.block_time) AS last_decoded_trade
+
+    FROM target_pools AS p
+
+    LEFT JOIN dex.trades AS d
+        ON d.project_contract_address = p.pool_address
+       AND d.blockchain = 'ethereum'
+       AND d.project = 'uniswap'
+       AND d.version = '2'
+
+    GROUP BY
+        p.pool_name,
+        p.pool_address
+),
+
+
+-- =====================================================================
+-- STEP 3 — COUNT THE RAW UNISWAP V2 SWAP EVENTS
+-- =====================================================================
+--
+-- pair_evt_swap contains the raw Swap events emitted by Uniswap V2
+-- pool contracts.
+--
+-- Each matching row represents one Swap event.
+--
+-- These raw events are the source used by our replication pipeline.
+-- =====================================================================
+
+raw_swaps AS (
+
+    SELECT
+        p.pool_name,
+        p.pool_address,
+
+        COUNT(s.evt_tx_hash) AS number_of_raw_swaps,
+
+        MIN(s.evt_block_time) AS first_raw_swap,
+
+        MAX(s.evt_block_time) AS last_raw_swap
+
+    FROM target_pools AS p
+
+    LEFT JOIN uniswap_v2_ethereum.pair_evt_swap AS s
+        ON s.contract_address = p.pool_address
+
+    GROUP BY
+        p.pool_name,
+        p.pool_address
+)
+
+
+-- =====================================================================
+-- STEP 4 — COMBINE THE DECODED AND RAW RESULTS
+-- =====================================================================
+--
+-- One final row is produced for each suspicious pool.
+--
+-- Comparing number_of_decoded_trades with number_of_raw_swaps tells us
+-- whether Dune's standardized table and raw event table contain the same
+-- number of pool trades.
+-- =====================================================================
+
+SELECT
+    d.pool_name,
+    d.pool_address,
+
+    d.number_of_decoded_trades,
+    d.first_decoded_trade,
+    d.last_decoded_trade,
+
+    r.number_of_raw_swaps,
+    r.first_raw_swap,
+    r.last_raw_swap
+
+FROM decoded_trades AS d
+
+INNER JOIN raw_swaps AS r
+    ON d.pool_address = r.pool_address
+
+ORDER BY d.pool_name;

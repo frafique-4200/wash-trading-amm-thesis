@@ -1,0 +1,39 @@
+-- ============================================================
+-- VALIDATION TEST 1
+-- STAGE 1B: ADJACENCY CHECK
+--
+-- PURPOSE:
+-- Retrieve EVERY Uniswap V2 Swap event in the XRT/WETH pool
+-- between the two known wash-trading transactions.
+--
+-- If no other pool swap occurs between the two target swaps,
+-- they are adjacent in the pool's chronological swap sequence.
+-- ============================================================
+
+SELECT
+    contract_address,
+    evt_tx_hash,
+    evt_tx_from,
+    evt_tx_to,
+    evt_index,
+    evt_block_time,
+    evt_block_number,
+
+    amount0In,
+    amount0Out,
+    amount1In,
+    amount1Out,
+
+    sender,
+    "to"
+
+FROM uniswap_v2_ethereum.pair_evt_swap
+
+WHERE contract_address =
+    0x3185626c14acb9531d19560decb9d3e5e80681b1
+
+  AND evt_block_number BETWEEN 10525617 AND 10525621
+
+ORDER BY
+    evt_block_number,
+    evt_index;

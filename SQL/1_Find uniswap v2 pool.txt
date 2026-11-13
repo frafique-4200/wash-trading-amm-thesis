@@ -1,0 +1,9 @@
+SELECT DISTINCT
+    a.pool
+FROM dune.basilisk42004190.dataset_abnormal_pools AS a
+JOIN dex.trades AS d
+    ON a.pool = d.project_contract_address
+WHERE d.blockchain = 'ethereum'
+  AND d.project = 'uniswap'
+  AND d.version = '2'
+LIMIT 20;

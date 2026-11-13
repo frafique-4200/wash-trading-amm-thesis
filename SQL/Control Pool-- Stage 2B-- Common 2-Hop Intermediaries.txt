@@ -1,0 +1,294 @@
+-- ============================================================
+-- CONTROL POOL
+-- STAGE 2B — COMMON 2-HOP ETH INTERMEDIARIES
+--
+-- PURPOSE
+-- ============================================================
+--
+-- Stage 2A identified direct ETH-transfer relationships
+-- between candidate transaction initiators.
+--
+-- This query now searches for INDIRECT relationships of the
+-- form:
+--
+--        Sender A
+--           |
+--           | ETH-transfer relationship
+--           |
+--      Intermediary
+--           |
+--           | ETH-transfer relationship
+--           |
+--        Sender B
+--
+-- Therefore:
+--
+--        distance(Sender A, Sender B) = 2
+--
+-- Our replication uses:
+--
+--        k = 2
+--
+-- so such a relationship can connect Sender A and Sender B
+-- in the sender graph.
+--
+--
+-- IMPORTANT
+-- ============================================================
+--
+-- ETH transfers are treated as UNDIRECTED relationships.
+--
+-- Therefore it does not matter whether the candidate sender
+-- sent ETH to the intermediary or received ETH from it.
+--
+--
+-- This query does NOT yet decide whether an intermediary is
+-- a legitimate private address or a public service such as:
+--
+--   - DEX
+--   - CEX
+--   - lending protocol
+--   - aggregator
+--   - bridge
+--   - mixer
+--
+-- Public-service removal will be performed AFTER obtaining
+-- the common intermediaries, just as in the suspicious-pool
+-- analysis.
+--
+-- ============================================================
+
+
+
+-- ============================================================
+-- STEP 1 — DEFINE UNIQUE STAGE-1 CANDIDATE INITIATORS
+-- ============================================================
+
+WITH target_senders(address) AS (
+
+    VALUES
+
+        (0x001182890a094820eb9d4401693ba0b9554f0f66),
+
+        (0x464587ee0cc5185686b29af7856b1d13647e93be),
+
+        (0x5ca96d732286cb108f4c9a052a6a169fcf75085b),
+
+        (0x67c0fc4b0490ab7e76c08c2bbd30fac0059bbc7a),
+
+        (0x769b100c21ccc90dc96ee15b1ff888a446dbe4d9),
+
+        (0x86254cb5a96c161e503d3255d67fdddec056fefe),
+
+        (0xa21caebd27a296678176ac886735bfd18f875b8f),
+
+        (0xb06c901509ee27937572382463a3ed59efcff595),
+
+        (0xb27179fb6d0412f0ec9873baf26dae3457c5494a),
+
+        (0xbcdbd77ef6cac72f2f68e41d86b3c2ab06a74ad5),
+
+        (0xcd6aef4b676eab653a439bf1a0b905abc7022be2),
+
+        (0xdec08cb92a506b88411da9ba290f3694be223c26),
+
+        (0xf21ce4a93534e725215bfec2a5e1add496e80469),
+
+        (0xfb3d12cd133957912404ca66d576e388631aae54)
+),
+
+
+
+-- ============================================================
+-- STEP 2 — FIND EVERY ETH NEIGHBOR OF EACH CANDIDATE SENDER
+-- ============================================================
+--
+-- For every candidate sender, identify addresses with which
+-- it has exchanged a positive amount of ETH.
+--
+-- Because the graph is UNDIRECTED:
+--
+-- If candidate sender = transaction FROM:
+--
+--       neighbor = transaction TO
+--
+-- If candidate sender = transaction TO:
+--
+--       neighbor = transaction FROM
+--
+-- Thus both directions of ETH movement create the same type
+-- of graph relationship.
+
+
+sender_neighbors AS (
+
+    SELECT
+
+        s.address AS candidate_sender,
+
+
+        CASE
+
+            WHEN t."from" = s.address
+                THEN t."to"
+
+            ELSE t."from"
+
+        END AS intermediary,
+
+
+        -- Number of ETH transactions supporting this
+        -- candidate-sender/intermediary relationship.
+
+        COUNT(*) AS relationship_transactions,
+
+
+        -- Earliest observed supporting block.
+
+        MIN(t.block_number) AS first_relationship_block,
+
+
+        -- Latest observed supporting block.
+
+        MAX(t.block_number) AS last_relationship_block
+
+
+    FROM ethereum.transactions t
+
+
+    INNER JOIN target_senders s
+
+        ON (
+            t."from" = s.address
+            OR
+            t."to" = s.address
+        )
+
+
+    -- --------------------------------------------------------
+    -- Same historical block interval used for the suspicious
+    -- pool entity-recognition analysis.
+    -- --------------------------------------------------------
+
+    WHERE t.block_number BETWEEN 10000835 AND 15400000
+
+
+      -- Only successful transactions can establish an
+      -- effective ETH-transfer relationship.
+
+      AND t.success = TRUE
+
+
+      -- Zero-value transactions do not represent ETH
+      -- transfers.
+
+      AND t.value > 0
+
+
+      -- Self-transfers do not connect two different
+      -- addresses and therefore must be excluded.
+
+      AND t."from" <> t."to"
+
+
+    GROUP BY
+
+        s.address,
+
+        CASE
+
+            WHEN t."from" = s.address
+                THEN t."to"
+
+            ELSE t."from"
+
+        END
+)
+
+
+
+-- ============================================================
+-- STEP 3 — FIND COMMON INTERMEDIARIES
+-- ============================================================
+--
+-- We join the neighbor table to itself.
+--
+-- If two DIFFERENT candidate senders have the SAME
+-- intermediary, then:
+--
+--     Sender A -- Intermediary -- Sender B
+--
+-- gives a path of length 2.
+
+
+SELECT
+
+    n1.candidate_sender AS sender_a,
+
+    n2.candidate_sender AS sender_b,
+
+    n1.intermediary AS common_intermediary,
+
+
+    -- Number of ETH transactions supporting the relationship
+    -- between Sender A and the intermediary.
+
+    n1.relationship_transactions
+        AS sender_a_relationship_transactions,
+
+
+    -- Number of ETH transactions supporting the relationship
+    -- between Sender B and the intermediary.
+
+    n2.relationship_transactions
+        AS sender_b_relationship_transactions,
+
+
+    n1.first_relationship_block
+        AS sender_a_first_block,
+
+
+    n1.last_relationship_block
+        AS sender_a_last_block,
+
+
+    n2.first_relationship_block
+        AS sender_b_first_block,
+
+
+    n2.last_relationship_block
+        AS sender_b_last_block
+
+
+
+FROM sender_neighbors n1
+
+
+INNER JOIN sender_neighbors n2
+
+    ON n1.intermediary = n2.intermediary
+
+
+    -- Only compare two different candidate senders.
+    --
+    -- Using < also prevents duplicate reversed results:
+    --
+    --     A-B
+    -- and
+    --     B-A
+
+    AND n1.candidate_sender < n2.candidate_sender
+
+
+
+-- ============================================================
+-- STEP 4 — SORT THE OUTPUT
+-- ============================================================
+
+ORDER BY
+
+    sender_a,
+
+    sender_b,
+
+    common_intermediary;

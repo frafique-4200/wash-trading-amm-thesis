@@ -1,0 +1,3 @@
+SELECT COUNT(*) AS number_of_raw_swaps
+FROM uniswap_v2_ethereum.pair_evt_swap
+WHERE contract_address = 0xe75ffcb48f08da718f8955fac8289eefe96b7013;

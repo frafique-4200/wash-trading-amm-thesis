@@ -1,0 +1,56 @@
+-- ============================================================
+-- VALIDATION TEST 2
+-- Known sandwich-attack example from the paper
+--
+-- PURPOSE:
+-- Retrieve every decoded DEX trade belonging to the attacker's
+-- two transactions and the victim transaction.
+--
+-- We will use this data to determine:
+--   1. why the attack transactions resemble wash trading,
+--   2. whether the attacker transactions are related,
+--   3. whether the paper's sandwich filter removes them.
+-- ============================================================
+
+SELECT
+    block_time,
+    block_number,
+    tx_hash,
+    tx_from,
+    tx_to,
+    evt_index,
+
+    project,
+    version,
+
+    project_contract_address AS pool,
+
+    token_sold_symbol,
+    token_bought_symbol,
+
+    token_sold_amount,
+    token_bought_amount,
+
+    token_sold_address,
+    token_bought_address
+
+FROM dex.trades
+
+WHERE blockchain = 'ethereum'
+
+  AND tx_hash IN (
+
+    -- Transaction 1: attacker
+    0xbd72e0fb6ad4472ece37aa0c07a244634e98156c03f049808f8e5f6fc1740f9e,
+
+    -- Transaction 2: victim
+    0x7e90e7db1c4f6e32e2c1e5a8bcc914da84420dac9e07679a2f15cdcde30ffa7f,
+
+    -- Transaction 3: attacker
+    0x6d39098090fcc340cee00a1b518ca7e5d3766711124a084a5f46d6595e0c948b
+  )
+
+ORDER BY
+    block_number,
+    tx_hash,
+    evt_index;

@@ -1,0 +1,59 @@
+-- ============================================================
+-- VALIDATION TEST 3
+-- Ordinary arbitrage with asset conversion
+--
+-- Source:
+-- Gan et al., "Exposing Stealthy Wash Trading on
+-- Automated Market Maker Exchanges"
+--
+-- PURPOSE:
+-- Retrieve every decoded DEX trade occurring inside the
+-- paper's two real ordinary-arbitrage transactions.
+--
+-- We want to determine:
+--   1. which pools each transaction uses,
+--   2. the complete token-conversion route,
+--   3. which intermediate pool could look like wash trading
+--      when examined by itself,
+--   4. whether the multi-pool arbitrage exclusion detects it.
+-- ============================================================
+
+SELECT
+    block_time,
+    block_number,
+    tx_hash,
+    tx_from,
+    tx_to,
+    evt_index,
+
+    project,
+    version,
+
+    project_contract_address AS pool,
+
+    token_sold_symbol,
+    token_bought_symbol,
+
+    token_sold_amount,
+    token_bought_amount,
+
+    token_sold_address,
+    token_bought_address
+
+FROM dex.trades
+
+WHERE blockchain = 'ethereum'
+
+  AND tx_hash IN (
+
+    -- Paper: Arbitrage trade 1
+    0xc63c6b32597d18b5fb8bdba6dd1d6d21fa1ade61d6242a8c8471c4aee7f16363,
+
+    -- Paper: Arbitrage trade 2
+    0xdc5cbec5c4bc6d082fe88cd59aaa21b6ba555319693418d09a6b3c31400fb92f
+  )
+
+ORDER BY
+    block_number,
+    tx_hash,
+    evt_index;

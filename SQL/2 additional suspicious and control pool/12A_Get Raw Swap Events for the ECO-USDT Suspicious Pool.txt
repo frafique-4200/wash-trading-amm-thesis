@@ -1,0 +1,58 @@
+-- =====================================================================
+-- QUERY 12A
+-- GET RAW UNISWAP V2 SWAP EVENTS FOR THE ECO-USDT SUSPICIOUS POOL
+-- =====================================================================
+--
+-- PURPOSE
+--
+-- Download every raw Swap event belonging to the selected ECO-USDT
+-- suspicious pool during its observed trading period within the AMM
+-- paper's block range.
+--
+-- Pool address:
+--   0x4dfcb1482878ededccd6cc19f9d043cdd56ffd06
+--
+-- Expected number of rows:
+--   9,449
+--
+-- The results are ordered by block number and event index so that the
+-- original sequence of swaps is preserved.
+-- =====================================================================
+
+SELECT
+    contract_address,
+
+    evt_tx_hash,
+    evt_tx_from,
+    evt_tx_to,
+    evt_tx_index,
+
+    evt_index,
+    evt_block_time,
+    evt_block_number,
+    evt_block_date,
+
+    amount0In,
+    amount0Out,
+    amount1In,
+    amount1Out,
+
+    sender,
+    "to"
+
+FROM uniswap_v2_ethereum.pair_evt_swap
+
+WHERE contract_address =
+    0x4dfcb1482878ededccd6cc19f9d043cdd56ffd06
+
+  -- Use the suspicious pool's fixed observation window.
+  AND evt_block_time >= TIMESTAMP '2020-11-09 12:13:04'
+
+  AND evt_block_time <= TIMESTAMP '2022-08-23 10:54:06'
+
+  -- Enforce the AMM paper's complete data-collection boundary.
+  AND evt_block_number BETWEEN 10000835 AND 15400000
+
+ORDER BY
+    evt_block_number,
+    evt_index;

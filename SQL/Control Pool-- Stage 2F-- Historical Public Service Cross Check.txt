@@ -1,0 +1,989 @@
+-- ============================================================
+-- CONTROL POOL
+-- STAGE 2F — HISTORICAL PUBLIC SERVICE CROSS CHECK
+--
+-- PURPOSE
+-- ============================================================
+--
+-- This query performs the historical public-service check
+-- for the intermediary addresses identified during the
+-- control-pool Stage-2 entity-recognition analysis.
+--
+-- It follows the SAME structure used for the validated
+-- suspicious-pool Stage 2F analysis.
+--
+--
+-- WHY THIS STEP IS NEEDED
+-- ============================================================
+--
+-- Stage 2B identified possible 2-hop ETH relationships:
+--
+--       Candidate Sender A
+--                |
+--          Intermediary
+--                |
+--       Candidate Sender B
+--
+-- However, an intermediary may be a public service such as:
+--
+--       DEX
+--       CEX
+--       aggregator
+--       bridge
+--       lending protocol
+--       other public DeFi/CeFi infrastructure
+--
+-- Such an address can connect completely unrelated users.
+--
+-- Therefore, public-service intermediaries must not be used
+-- as evidence that two candidate senders belong to the same
+-- entity.
+--
+--
+-- HISTORICAL PROBLEM
+-- ============================================================
+--
+-- Current Dune labels alone are not enough.
+--
+-- An address may currently be labelled as belonging to a
+-- protocol even though the relevant contract did not exist
+-- during the December 2020 control-pool transactions.
+--
+-- Therefore this query combines:
+--
+--   1. labels.owner_addresses
+--
+--   2. labels.owner_details
+--
+--   3. known centralized-exchange addresses
+--
+--   4. known CEX deposit addresses
+--
+--   5. Ethereum contract deployment history
+--
+--
+-- IMPORTANT
+-- ============================================================
+--
+-- An address that is NOT identified as a public service by
+-- this query is NOT proven to be a private address.
+--
+-- The correct interpretation is:
+--
+--   "not identified as a public service in the Dune
+--    datasets used in this reduced replication."
+--
+--
+-- This is the same limitation that applies to the
+-- suspicious-pool implementation.
+--
+-- ============================================================
+
+
+
+WITH
+
+
+-- ============================================================
+-- STEP 1 — DEFINE CONTROL-POOL HISTORICAL CUTOFF
+-- ============================================================
+--
+-- The latest swap appearing in any of the 16 Stage-1
+-- candidate groups is:
+--
+--       swap sequence: 36
+--
+--       block:
+--       11,374,977
+--
+--       time:
+--       2020-12-02 19:22:02 UTC
+--
+-- This value was obtained directly from the raw control-pool
+-- Swap-event data.
+--
+--
+-- We use this block as the historical cutoff when examining
+-- smart-contract deployment.
+--
+-- If a contract was deployed AFTER this block, it could not
+-- have functioned as that contract during our candidate
+-- period.
+
+
+parameters AS (
+
+    SELECT
+
+        CAST(11374977 AS BIGINT)
+            AS candidate_cutoff_block,
+
+        TIMESTAMP '2020-12-02 19:22:02'
+            AS candidate_cutoff_time
+),
+
+
+
+-- ============================================================
+-- STEP 2 — DEFINE THE 40 STAGE-2 INTERMEDIARIES
+-- ============================================================
+--
+-- These are the 40 unique common intermediary addresses
+-- obtained from:
+--
+--     control_pool_stage2_common_intermediaries.csv
+--
+-- They created possible paths of the form:
+--
+--     Sender A -- intermediary -- Sender B
+--
+-- corresponding to graph distance:
+--
+--     distance = 2
+--
+-- before public-service removal.
+
+
+intermediaries(address) AS (
+
+    VALUES
+
+        (0x0fabaf48bbf864a3947bdd0ba9d764791a60467a),
+
+        (0x11111112542d85b3ef69ae05771c2dccff4faa26),
+
+        (0x111111125434b319222cdbf8c261674adb56f3ae),
+
+        (0x1111111254fb6c44bac0bed2854e76f90643097d),
+
+        (0x15c7d8ba5d18fa7abd196c9bd4f457c4e73d0cb2),
+
+        (0x165cd37b4c644c2921454429e7f9358d18a45e14),
+
+        (0x1b829b926a14634d36625e60165c0770c09d02b2),
+
+        (0x225144eb43913b30b6c1f43c9b72698bcd28a3bb),
+
+        (0x273ba31c706b9d9fdae1fd999183bfa865895be9),
+
+        (0x283af0b28c62c092c9727f1ee09c02ca627eb7f5),
+
+        (0x30b8235f492265a734347c0bf36e2ffcad887be2),
+
+        (0x3980c9ed79d2c191a89e02fa3529c60ed6e9c04b),
+
+        (0x3e66b66fd1d0b02fda6c811da9e0547970db2f21),
+
+        (0x4ba6ddd7b89ed838fed25d208d4f644106e34279),
+
+        (0x4c46eee280eea9c16ae93be7ca499a23f6f000bf),
+
+        (0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f),
+
+        (0x52ec2f3d7c5977a8e558c8d9c6000b615098e8fc),
+
+        (0x564286362092d8e7936f0549571a803b203aaced),
+
+        (0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45),
+
+        (0x73282a63f0e3d7e9604575420f777361eca3c86a),
+
+        (0x75e89d5979e4f6fba9f97c104c2f0afb3f1dcb88),
+
+        (0x7a250d5630b4cf539739df2c5dacb4c659f2488d),
+
+        (0x7be8076f4ea4a4ad08075c2508e481d6c946d12b),
+
+        (0x7f268357a8c2552623316e2562d90e642bb538e5),
+
+        (0x8620121c74da24b7718849d3e6a57fad9c2b098c),
+
+        (0x986a2fca9eda0e06fbf7839b89bfc006ee2a23dd),
+
+        (0xa0c68c638235ee32657e8f720a23cec1bfc77c77),
+
+        (0xa68dd8cb83097765263adad881af6eed479c4a33),
+
+        (0xabea9132b05a70803a4e85094fd0e1800777fbef),
+
+        (0xba12222222228d8ba445958a75a0704d566bf2c8),
+
+        (0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2),
+
+        (0xc098b2a3aa256d2140208c3de6543aaef5cd3a94),
+
+        (0xc280ac0b1b91d1d9cc1fe42f7725d053fd7b4978),
+
+        (0xc6dd29b5564bf79a5c1213632992601e1c243a97),
+
+        (0xccc441ac31f02cd96c153db6fd5fe0a2f4e6a68d),
+
+        (0xcd4ec7b66fbc029c116ba9ffb3e59351c20b5b06),
+
+        (0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f),
+
+        (0xdef1c0ded9bec7f1a1670819833240f027b25eff),
+
+        (0xe00f0b99146358b5642453d40ad50b48fcb710d5),
+
+        (0xe592427a0aece92de3edee1f18e0157c05861564)
+),
+
+
+
+-- ============================================================
+-- STEP 3 — OWNER / CUSTODY INFORMATION
+-- ============================================================
+--
+-- labels.owner_addresses can identify known ownership or
+-- custody relationships.
+--
+-- Examples could include:
+--
+--       Uniswap
+--       1inch
+--       Binance
+--       Coinbase
+--       other protocols/services
+--
+--
+-- One Ethereum address may have multiple records.
+--
+-- Therefore, we aggregate the information so that there is
+-- only one output record per intermediary address.
+
+
+owner_information AS (
+
+    SELECT
+
+        oa.address,
+
+
+        -- ----------------------------------------------------
+        -- OWNER KEY
+        -- ----------------------------------------------------
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    oa.owner_key
+                )
+
+                FILTER (
+                    WHERE oa.owner_key IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS owner_key,
+
+
+        -- ----------------------------------------------------
+        -- CUSTODY OWNER
+        -- ----------------------------------------------------
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    oa.custody_owner
+                )
+
+                FILTER (
+                    WHERE oa.custody_owner IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS custody_owner,
+
+
+        -- ----------------------------------------------------
+        -- ACCOUNT OWNER
+        -- ----------------------------------------------------
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    oa.account_owner
+                )
+
+                FILTER (
+                    WHERE oa.account_owner IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS account_owner,
+
+
+        -- ----------------------------------------------------
+        -- CONTRACT NAME
+        -- ----------------------------------------------------
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    oa.contract_name
+                )
+
+                FILTER (
+                    WHERE oa.contract_name IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS contract_name,
+
+
+        -- ----------------------------------------------------
+        -- EOA / CONTRACT INFORMATION
+        -- ----------------------------------------------------
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    CAST(
+                        oa.eoa AS VARCHAR
+                    )
+                )
+
+                FILTER (
+                    WHERE oa.eoa IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS eoa,
+
+
+        -- ----------------------------------------------------
+        -- LABEL SOURCE
+        -- ----------------------------------------------------
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    oa.source
+                )
+
+                FILTER (
+                    WHERE oa.source IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS source,
+
+
+        -- ----------------------------------------------------
+        -- SOURCE WEBSITE
+        -- ----------------------------------------------------
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    oa.source_website
+                )
+
+                FILTER (
+                    WHERE oa.source_website IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS source_website,
+
+
+        -- ----------------------------------------------------
+        -- SOURCE EVIDENCE
+        -- ----------------------------------------------------
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    oa.source_evidence
+                )
+
+                FILTER (
+                    WHERE oa.source_evidence IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS source_evidence
+
+
+    FROM labels.owner_addresses oa
+
+
+    INNER JOIN intermediaries i
+
+        ON oa.address = i.address
+
+
+    WHERE oa.blockchain = 'ethereum'
+
+
+    GROUP BY
+
+        oa.address
+),
+
+-- ============================================================
+-- STEP 4 — ENTITY-LEVEL INFORMATION
+-- ============================================================
+--
+-- labels.owner_details contains higher-level information
+-- about known owners.
+--
+-- We use it to obtain:
+--
+--       entity name
+--       primary category
+--       category tags
+--
+--
+-- For example, an address might ultimately be classified as:
+--
+--       entity_name:
+--       Uniswap
+--
+--       primary_category:
+--       Decentralized Exchange
+--
+--
+-- This information helps determine whether an intermediary
+-- represents public infrastructure rather than evidence of
+-- common trader control.
+
+
+entity_information AS (
+
+    SELECT
+
+        oa.address,
+
+
+        -- ----------------------------------------------------
+        -- ENTITY NAME
+        -- ----------------------------------------------------
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    od.name
+                )
+
+                FILTER (
+                    WHERE od.name IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS entity_name,
+
+
+        -- ----------------------------------------------------
+        -- PRIMARY CATEGORY
+        -- ----------------------------------------------------
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    od.primary_category
+                )
+
+                FILTER (
+                    WHERE od.primary_category IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS primary_category,
+
+
+        -- ----------------------------------------------------
+        -- CATEGORY TAGS
+        -- ----------------------------------------------------
+        --
+        -- IMPORTANT:
+        --
+        -- od.category_tags is already an ARRAY(VARCHAR).
+        --
+        -- Therefore we cannot use:
+        --
+        --     CAST(od.category_tags AS VARCHAR)
+        --
+        -- Instead:
+        --
+        -- 1. array_agg() collects the tag arrays from all
+        --    matching owner-detail records.
+        --
+        -- 2. flatten() converts:
+        --
+        --       array(array(varchar))
+        --
+        --    into:
+        --
+        --       array(varchar)
+        --
+        -- 3. array_distinct() removes duplicate tags.
+        --
+        -- 4. array_join() converts the final tag array into
+        --    one readable text field for the CSV.
+
+
+        array_join(
+
+            array_distinct(
+
+                flatten(
+
+                    array_agg(
+                        od.category_tags
+                    )
+
+                    FILTER (
+                        WHERE od.category_tags IS NOT NULL
+                    )
+                )
+            ),
+
+            ' | '
+
+        ) AS category_tags
+
+
+    FROM labels.owner_addresses oa
+
+
+    INNER JOIN intermediaries i
+
+        ON oa.address = i.address
+
+
+    LEFT JOIN labels.owner_details od
+
+        ON oa.owner_key = od.owner_key
+
+
+    WHERE oa.blockchain = 'ethereum'
+
+
+    GROUP BY
+
+        oa.address
+),
+
+
+
+
+
+-- ============================================================
+-- STEP 5 — KNOWN CENTRALIZED-EXCHANGE ADDRESSES
+-- ============================================================
+--
+-- Some public-service intermediaries may be centralized
+-- exchange infrastructure.
+--
+-- Therefore, we independently check Dune's CEX address
+-- dataset.
+
+
+cex_information AS (
+
+    SELECT
+
+        c.address,
+
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    c.cex_name
+                )
+
+                FILTER (
+                    WHERE c.cex_name IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS cex_name
+
+
+    FROM cex.addresses c
+
+
+    INNER JOIN intermediaries i
+
+        ON c.address = i.address
+
+
+    WHERE c.blockchain = 'ethereum'
+
+
+    GROUP BY
+
+        c.address
+),
+
+
+
+-- ============================================================
+-- STEP 6 — KNOWN CEX DEPOSIT ADDRESSES
+-- ============================================================
+--
+-- A centralized exchange deposit address can also connect
+-- otherwise unrelated users.
+--
+-- Therefore we check this dataset separately.
+--
+-- We retain:
+--
+--       deposit CEX name
+--
+--       first known deposit-block time
+--
+--
+-- The first-block time can provide useful historical context.
+
+
+cex_deposit_information AS (
+
+    SELECT
+
+        d.address,
+
+
+        array_join(
+
+            array_distinct(
+
+                array_agg(
+                    d.cex_name
+                )
+
+                FILTER (
+                    WHERE d.cex_name IS NOT NULL
+                )
+            ),
+
+            ' | '
+
+        ) AS deposit_cex_name,
+
+
+        MIN(
+            d.deposit_first_block_time
+        ) AS deposit_first_block_time
+
+
+    FROM cex.deposit_addresses d
+
+
+    INNER JOIN intermediaries i
+
+        ON d.address = i.address
+
+
+    WHERE d.blockchain = 'ethereum'
+
+
+    GROUP BY
+
+        d.address
+),
+
+
+
+-- ============================================================
+-- STEP 7 — SMART-CONTRACT DEPLOYMENT HISTORY
+-- ============================================================
+--
+-- This is the historical part of the cross-check.
+--
+-- We use Ethereum contract creation traces to determine:
+--
+--       when the intermediary contract was deployed;
+--
+--       which block it was deployed in.
+--
+--
+-- Why?
+--
+-- Suppose an address is labelled as a DEX router today.
+--
+-- If the contract was only deployed in 2021, it clearly
+-- could not have acted as a DEX router during our
+-- December 2020 candidate period.
+--
+--
+-- This prevents us from applying a current label
+-- retroactively without checking whether the contract
+-- actually existed.
+
+
+contract_creation AS (
+
+    SELECT
+
+        ct.address,
+
+
+        MIN(
+            ct.block_time
+        ) AS contract_deployed_at,
+
+
+        MIN(
+            ct.block_number
+        ) AS contract_deployed_block
+
+
+    FROM ethereum.creation_traces ct
+
+
+    INNER JOIN intermediaries i
+
+        ON ct.address = i.address
+
+
+    GROUP BY
+
+        ct.address
+)
+
+
+
+-- ============================================================
+-- STEP 8 — COMBINE ALL HISTORICAL EVIDENCE
+-- ============================================================
+--
+-- We now create exactly one output row for each of the
+-- 40 intermediary addresses.
+--
+--
+-- LEFT JOIN is important:
+--
+-- an intermediary should remain in the output even if one or
+-- more Dune datasets contain no information about it.
+--
+--
+-- The resulting structure intentionally mirrors the
+-- suspicious-pool historical-service CSV.
+
+
+SELECT
+
+
+    -- ========================================================
+    -- INTERMEDIARY ADDRESS
+    -- ========================================================
+
+    i.address,
+
+
+    -- ========================================================
+    -- OWNER / CUSTODY EVIDENCE
+    -- ========================================================
+
+    oi.owner_key,
+
+    oi.custody_owner,
+
+    oi.account_owner,
+
+    oi.contract_name,
+
+    oi.eoa,
+
+    oi.source,
+
+    oi.source_website,
+
+    oi.source_evidence,
+
+
+    -- ========================================================
+    -- ENTITY INFORMATION
+    -- ========================================================
+
+    ei.entity_name,
+
+    ei.primary_category,
+
+    ei.category_tags,
+
+
+    -- ========================================================
+    -- CEX INFORMATION
+    -- ========================================================
+
+    ci.cex_name,
+
+    cdi.deposit_cex_name,
+
+    cdi.deposit_first_block_time,
+
+
+    -- ========================================================
+    -- CONTRACT DEPLOYMENT INFORMATION
+    -- ========================================================
+
+    cc.contract_deployed_at,
+
+    cc.contract_deployed_block,
+
+
+    -- ========================================================
+    -- HISTORICAL CONTRACT-EXISTENCE TEST
+    -- ========================================================
+    --
+    -- TRUE:
+    --
+    --     the intermediary is a smart contract and that
+    --     contract had already been deployed by block
+    --     11,374,977.
+    --
+    --
+    -- FALSE:
+    --
+    --     either:
+    --
+    --       1. the contract was deployed later;
+    --
+    --       OR
+    --
+    --       2. no contract creation trace exists.
+    --
+    --
+    -- IMPORTANT:
+    --
+    -- FALSE does NOT mean:
+    --
+    --       "this address is definitely private."
+    --
+    -- An EOA naturally has no smart-contract creation trace.
+
+
+    CASE
+
+        WHEN
+            cc.contract_deployed_block IS NOT NULL
+
+        AND
+            cc.contract_deployed_block
+                <= p.candidate_cutoff_block
+
+        THEN TRUE
+
+        ELSE FALSE
+
+    END AS contract_existed_by_candidate_time
+
+
+
+FROM intermediaries i
+
+
+
+-- ============================================================
+-- ADD CANDIDATE CUTOFF PARAMETER
+-- ============================================================
+
+CROSS JOIN parameters p
+
+
+
+-- ============================================================
+-- JOIN OWNER INFORMATION
+-- ============================================================
+
+LEFT JOIN owner_information oi
+
+    ON i.address = oi.address
+
+
+
+-- ============================================================
+-- JOIN ENTITY INFORMATION
+-- ============================================================
+
+LEFT JOIN entity_information ei
+
+    ON i.address = ei.address
+
+
+
+-- ============================================================
+-- JOIN CEX INFORMATION
+-- ============================================================
+
+LEFT JOIN cex_information ci
+
+    ON i.address = ci.address
+
+
+
+-- ============================================================
+-- JOIN CEX DEPOSIT INFORMATION
+-- ============================================================
+
+LEFT JOIN cex_deposit_information cdi
+
+    ON i.address = cdi.address
+
+
+
+-- ============================================================
+-- JOIN CONTRACT DEPLOYMENT INFORMATION
+-- ============================================================
+
+LEFT JOIN contract_creation cc
+
+    ON i.address = cc.address
+
+
+
+-- ============================================================
+-- STEP 9 — SORT OUTPUT
+-- ============================================================
+
+ORDER BY
+
+    i.address;

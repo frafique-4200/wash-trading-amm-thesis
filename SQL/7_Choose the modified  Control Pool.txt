@@ -1,0 +1,6 @@
+SELECT
+    COUNT(*) AS number_of_raw_swaps,
+    MIN(evt_block_time) AS first_swap,
+    MAX(evt_block_time) AS last_swap
+FROM uniswap_v2_ethereum.pair_evt_swap
+WHERE contract_address = 0xae567dc1750315b683dc2f9195fb98f4de3950e2;

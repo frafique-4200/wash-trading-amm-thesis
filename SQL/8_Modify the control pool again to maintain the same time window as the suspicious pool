@@ -1,0 +1,18 @@
+SELECT
+    s.contract_address AS pool,
+    COUNT(*) AS number_of_swaps
+FROM uniswap_v2_ethereum.pair_evt_swap AS s
+LEFT JOIN dune.basilisk42004190.dataset_abnormal_pools AS a
+    ON s.contract_address = a.pool
+WHERE s.evt_block_time >= TIMESTAMP '2020-12-02 18:47:28'
+  AND s.evt_block_time <= TIMESTAMP '2020-12-02 19:50:25'
+  AND a.pool IS NULL
+GROUP BY s.contract_address
+HAVING COUNT(*) BETWEEN 30 AND 50
+ORDER BY ABS(COUNT(*) - 36)
+LIMIT 10;
+-- =================================================================
+-- output
+-- =================================================================
+--   pool                                         number_of_swaps	
+--   0x5b81f9b009270f2b57ae7d107199ff567d852064	  39

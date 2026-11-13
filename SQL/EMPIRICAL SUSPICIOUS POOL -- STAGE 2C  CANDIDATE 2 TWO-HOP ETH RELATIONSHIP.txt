@@ -1,0 +1,94 @@
+-- ============================================================
+-- EMPIRICAL SUSPICIOUS POOL
+-- STAGE 2C: CANDIDATE 2 TWO-HOP ETH RELATIONSHIP
+--
+-- Candidate addresses:
+--
+-- A = 0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+-- B = 0x5b4b2f2a16dd1904babb54d49887416f4705512e
+--
+-- PURPOSE:
+-- Find any common ETH-transfer neighbor C such that:
+--
+--        A ---- C ---- B
+--
+-- Transfers are treated as UNDIRECTED.
+--
+-- The block range matches the paper's Ethereum study period.
+-- ============================================================
+
+
+WITH a_neighbors AS (
+
+    SELECT DISTINCT
+
+        CASE
+            WHEN "from" =
+                0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+            THEN "to"
+            ELSE "from"
+        END AS neighbor
+
+    FROM ethereum.transactions
+
+    WHERE value > 0
+
+      AND block_number BETWEEN 10000835 AND 15400000
+
+      AND (
+            "from" =
+                0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+
+            OR
+
+            "to" =
+                0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+          )
+),
+
+
+b_neighbors AS (
+
+    SELECT DISTINCT
+
+        CASE
+            WHEN "from" =
+                0x5b4b2f2a16dd1904babb54d49887416f4705512e
+            THEN "to"
+            ELSE "from"
+        END AS neighbor
+
+    FROM ethereum.transactions
+
+    WHERE value > 0
+
+      AND block_number BETWEEN 10000835 AND 15400000
+
+      AND (
+            "from" =
+                0x5b4b2f2a16dd1904babb54d49887416f4705512e
+
+            OR
+
+            "to" =
+                0x5b4b2f2a16dd1904babb54d49887416f4705512e
+          )
+)
+
+
+SELECT
+    a.neighbor AS common_intermediary
+
+FROM a_neighbors a
+
+INNER JOIN b_neighbors b
+    ON a.neighbor = b.neighbor
+
+WHERE a.neighbor IS NOT NULL
+
+  AND a.neighbor NOT IN (
+      0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b,
+      0x5b4b2f2a16dd1904babb54d49887416f4705512e
+  )
+
+ORDER BY common_intermediary;

@@ -1,0 +1,7 @@
+SELECT *
+FROM dex.trades
+WHERE blockchain = 'ethereum'
+  AND project = 'uniswap'
+  AND version = '2'
+  AND project_contract_address = 0xe75ffcb48f08da718f8955fac8289eefe96b7013
+ORDER BY block_time;

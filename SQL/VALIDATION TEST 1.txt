@@ -1,0 +1,13 @@
+-- ------------------------------------------------------------
+-- VALIDATION TEST 1:
+-- Download the two Uniswap V2 swaps explicitly identified
+-- by the paper as a wash-trading example.
+-- ------------------------------------------------------------
+
+SELECT *
+FROM uniswap_v2_ethereum.pair_evt_swap
+WHERE evt_tx_hash IN (
+    0x78d1713837aae1d0995383550900ef33efc321e8870bdba7fbf5e398f7484eec,
+    0xa28546bd2203675f0dc27cad7a45549f4c71dc1c4cfaa82a485d3eafcc7125ac
+)
+ORDER BY evt_block_number, evt_index;

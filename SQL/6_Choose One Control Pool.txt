@@ -1,0 +1,18 @@
+SELECT
+    d.project_contract_address AS pool,
+    COUNT(*) AS number_of_trades
+FROM dex.trades AS d
+LEFT JOIN dune.basilisk42004190.dataset_abnormal_pools AS a
+    ON d.project_contract_address = a.pool
+WHERE d.blockchain = 'ethereum'
+  AND d.project = 'uniswap'
+  AND d.version = '2'
+  AND a.pool IS NULL
+  AND (
+      (d.token_bought_symbol = 'WETH' AND d.token_sold_symbol = 'USDC')
+      OR
+      (d.token_bought_symbol = 'USDC' AND d.token_sold_symbol = 'WETH')
+  )
+GROUP BY d.project_contract_address
+ORDER BY number_of_trades ASC
+LIMIT 50;

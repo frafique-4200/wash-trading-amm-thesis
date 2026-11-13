@@ -1,0 +1,44 @@
+WITH neighbors_a AS (
+    SELECT DISTINCT
+        CASE
+            WHEN "from" = 0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+            THEN "to"
+            ELSE "from"
+        END AS intermediary
+    FROM ethereum.transactions
+    WHERE block_number BETWEEN 10000835 AND 15400000
+      AND value > 0
+      AND (
+          "from" = 0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+          OR "to" = 0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+      )
+),
+
+neighbors_b AS (
+    SELECT DISTINCT
+        CASE
+            WHEN "from" = 0x5b4b2f2a16dd1904babb54d49887416f4705512e
+            THEN "to"
+            ELSE "from"
+        END AS intermediary
+    FROM ethereum.transactions
+    WHERE block_number BETWEEN 10000835 AND 15400000
+      AND value > 0
+      AND (
+          "from" = 0x5b4b2f2a16dd1904babb54d49887416f4705512e
+          OR "to" = 0x5b4b2f2a16dd1904babb54d49887416f4705512e
+      )
+)
+
+SELECT DISTINCT
+    a.intermediary,
+    o.custody_owner,
+    o.account_owner,
+    o.contract_name
+FROM neighbors_a AS a
+JOIN neighbors_b AS b
+    ON a.intermediary = b.intermediary
+LEFT JOIN labels.owner_addresses AS o
+    ON a.intermediary = o.address
+   AND o.blockchain = 'ethereum'
+LIMIT 50;

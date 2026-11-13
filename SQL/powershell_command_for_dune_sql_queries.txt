@@ -1,0 +1,31 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+==================================================================================================================================================================	
+---Type this BELOW	` first in the powershell:
+	
+	$apiKey = Read-Host -Prompt "Enter your Dune API key"; $headers = @{"X-DUNE-API-KEY" = $apiKey}
+--In the next prompt paste the api key for dune-frVzvpT8qs25oUuK2d8uBawun3mkyJEL	
+	
+--This is the convention for calling query in dune
+Invoke-RestMethod -Uri "https://api.dune.com/api/v1/query/YOUR_QUERY_ID/execute" -Method Post -Headers @{"X-DUNE-API-KEY"="-frVzvpT8qs25oUuK2d8uBawun3mkyJEL"} -OutFile "$HOME\Downloads\NAME_OF_THE_OUTPUT_FILE.csv"
+==================================================================================================================================================
+
+	
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8590874/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\find_uniswap_v2_pool.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8590688/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\find_uniswap_v2_pool.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8590704/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\number_of_trades.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8590704/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\find_the_trading_period_of_suspicious_pool.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8590856/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\3_View the 36 Trades.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8590874/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\4_Query the Raw Swap Events for Our Suspicious Pool.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8590919/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\5_number_of_raw_swaps.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8590874/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\6_uniswap_v2_suspicious_pool_raw_swaps.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8637456/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\6_choose_one_control_pool.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8591371/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\6B_pool_and_number_of_trades.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8591217/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\7_modifed_control_pool(same time_and approxiamte same number of swaps as in suspicious pool.csv"
+PS C:\WINDOWS\system32> Invoke-WebRequest -Uri "https://api.dune.com/api/v1/query/8591427/results/csv" -Headers @{"X-DUNE-API-KEY"=$apiKey} -OutFile "$HOME\Downloads\9_uniswap_v2_control_pool_raw_swaps.csv"
+PS C:\WINDOWS\system32>
+
+
+
+

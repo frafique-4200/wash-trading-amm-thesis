@@ -1,0 +1,67 @@
+-- ============================================================
+-- EMPIRICAL SUSPICIOUS POOL
+-- STAGE 3A: COMPLETE CANDIDATE DEX ACTIVITY
+--
+-- PURPOSE:
+--
+-- Retrieve every decoded DEX trade occurring inside the four
+-- Ethereum transactions that survived Stage 2.
+--
+-- This data will be used for Stage 3 MEV elimination:
+--
+--   1. Sandwich attack check
+--   2. Ordinary multi-pool arbitrage check
+--   3. Rebase-arbitrage check
+--
+-- We examine the COMPLETE transaction rather than only the
+-- swap that occurred in our suspicious RFI/WETH pool.
+-- ============================================================
+
+SELECT
+
+    block_time,
+    block_number,
+
+    tx_hash,
+    tx_from,
+    tx_to,
+
+    evt_index,
+
+    project,
+    version,
+
+    project_contract_address AS pool,
+
+    token_sold_symbol,
+    token_bought_symbol,
+
+    token_sold_amount,
+    token_bought_amount,
+
+    token_sold_address,
+    token_bought_address
+
+FROM dex.trades
+
+WHERE blockchain = 'ethereum'
+
+  AND tx_hash IN (
+
+    -- Candidate 1 — Swap 17
+    0xddf048be43bb9ba15174234493b0b91dfda8ba268246191921556bd82adef228,
+
+    -- Candidate 1 — Swap 18
+    0xaab69a34d189fa3f7062b67b11ae722dffde736ea97bc0790cd0d475ace6e7bb,
+
+    -- Candidate 2 — Swap 32
+    0xad2a6f82167b2a62e19ead1af47f57635a9c6cb37128a10d2aa61fb8318f03c4,
+
+    -- Candidate 2 — Swap 33
+    0xdd990ce43fec4d3ad42f5edc91839162e76c376840c0050d0c243e3c47ff8c94
+  )
+
+ORDER BY
+    block_number,
+    tx_hash,
+    evt_index;

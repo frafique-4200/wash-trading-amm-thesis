@@ -1,0 +1,58 @@
+-- =====================================================================
+-- QUERY 12D
+-- GET RAW SWAP EVENTS FOR THE wCELO MATCHED CONTROL POOL
+-- =====================================================================
+--
+-- PURPOSE
+--
+-- Download every raw Swap event belonging to the selected reference-
+-- negative control pool during the wCELO suspicious pool's exact
+-- observation window.
+--
+-- Control-pool address:
+--   0x669fbbd3612910ff1394f657900fbb8f335d044d
+--
+-- Expected number of rows:
+--   14,183
+--
+-- This pool was reconstructed from the paper-period non-abnormal
+-- Uniswap V2 set and selected by raw-Swap-count similarity.
+-- =====================================================================
+
+SELECT
+    contract_address,
+
+    evt_tx_hash,
+    evt_tx_from,
+    evt_tx_to,
+    evt_tx_index,
+
+    evt_index,
+    evt_block_time,
+    evt_block_number,
+    evt_block_date,
+
+    amount0In,
+    amount0Out,
+    amount1In,
+    amount1Out,
+
+    sender,
+    "to"
+
+FROM uniswap_v2_ethereum.pair_evt_swap
+
+WHERE contract_address =
+    0x669fbbd3612910ff1394f657900fbb8f335d044d
+
+  -- Use the wCELO suspicious pool's observation window.
+  AND evt_block_time >= TIMESTAMP '2020-12-17 21:19:44'
+
+  AND evt_block_time <= TIMESTAMP '2022-07-25 22:08:54'
+
+  -- Enforce the AMM paper's block range.
+  AND evt_block_number BETWEEN 10000835 AND 15400000
+
+ORDER BY
+    evt_block_number,
+    evt_index;

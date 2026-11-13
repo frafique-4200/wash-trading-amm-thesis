@@ -1,0 +1,34 @@
+-- ============================================================
+-- VALIDATION TEST 4
+-- Rebase-token arbitrage
+--
+-- Retrieve the RAW Uniswap V2 Swap events for the exact
+-- transaction identified in the paper.
+--
+-- We use the pair_evt_swap event table rather than dex.trades
+-- because dex.trades does not return this transaction.
+-- ============================================================
+
+SELECT
+    contract_address AS pool,
+    evt_tx_hash,
+    evt_tx_from,
+    evt_tx_to,
+    evt_index,
+    evt_block_time,
+    evt_block_number,
+
+    amount0In,
+    amount0Out,
+    amount1In,
+    amount1Out,
+
+    sender,
+    "to"
+
+FROM uniswap_v2_ethereum.pair_evt_swap
+
+WHERE evt_tx_hash =
+    0x8a5029d6b29f749cd04963f27c7ddc3e4f990a2aa2fc4e70d89c4e890b14fe2b
+
+ORDER BY evt_index;

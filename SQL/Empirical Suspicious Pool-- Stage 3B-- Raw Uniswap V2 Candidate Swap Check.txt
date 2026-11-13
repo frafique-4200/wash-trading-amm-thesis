@@ -1,0 +1,62 @@
+-- ============================================================
+-- EMPIRICAL SUSPICIOUS POOL
+-- STAGE 3B: RAW UNISWAP V2 CANDIDATE SWAP CHECK
+--
+-- PURPOSE:
+--
+-- Retrieve ALL raw Uniswap V2 Swap events occurring inside
+-- the four transactions that survived Stage 2.
+--
+-- This is particularly important for the rebase-arbitrage
+-- test because our Validation Test 4 demonstrated that
+-- dex.trades can omit historical swap activity.
+--
+-- We want to determine:
+--
+-- 1. How many raw Uniswap V2 swaps occur in each transaction?
+-- 2. Does any transaction touch another Uniswap V2 pool?
+-- 3. Does any transaction contain two opposite swaps in the
+--    same pool, as required by the paper's rebase-arbitrage
+--    exclusion rule?
+-- ============================================================
+
+SELECT
+    contract_address AS pool,
+
+    evt_tx_hash,
+    evt_tx_from,
+    evt_tx_to,
+
+    evt_block_time,
+    evt_block_number,
+    evt_index,
+
+    amount0In,
+    amount0Out,
+    amount1In,
+    amount1Out,
+
+    sender,
+    "to"
+
+FROM uniswap_v2_ethereum.pair_evt_swap
+
+WHERE evt_tx_hash IN (
+
+    -- Candidate 1 — Swap 17
+    0xddf048be43bb9ba15174234493b0b91dfda8ba268246191921556bd82adef228,
+
+    -- Candidate 1 — Swap 18
+    0xaab69a34d189fa3f7062b67b11ae722dffde736ea97bc0790cd0d475ace6e7bb,
+
+    -- Candidate 2 — Swap 32
+    0xad2a6f82167b2a62e19ead1af47f57635a9c6cb37128a10d2aa61fb8318f03c4,
+
+    -- Candidate 2 — Swap 33
+    0xdd990ce43fec4d3ad42f5edc91839162e76c376840c0050d0c243e3c47ff8c94
+)
+
+ORDER BY
+    evt_block_number,
+    evt_tx_hash,
+    evt_index;

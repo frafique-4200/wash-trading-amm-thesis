@@ -1,0 +1,58 @@
+-- =====================================================================
+-- QUERY 12C
+-- GET RAW UNISWAP V2 SWAP EVENTS FOR THE wCELO SUSPICIOUS POOL
+-- =====================================================================
+--
+-- PURPOSE
+--
+-- Download every raw Swap event belonging to the selected wCELO
+-- suspicious pool during its observed trading period within the AMM
+-- paper's block range.
+--
+-- Pool address:
+--   0x8d1ca95559abed542ef4402a252974221b5e1036
+--
+-- Expected number of rows:
+--   11,417
+--
+-- The chronological ordering must be preserved because both detection
+-- methods examine the sequence and proximity of swaps.
+-- =====================================================================
+
+SELECT
+    contract_address,
+
+    evt_tx_hash,
+    evt_tx_from,
+    evt_tx_to,
+    evt_tx_index,
+
+    evt_index,
+    evt_block_time,
+    evt_block_number,
+    evt_block_date,
+
+    amount0In,
+    amount0Out,
+    amount1In,
+    amount1Out,
+
+    sender,
+    "to"
+
+FROM uniswap_v2_ethereum.pair_evt_swap
+
+WHERE contract_address =
+    0x8d1ca95559abed542ef4402a252974221b5e1036
+
+  -- Use the wCELO suspicious pool's fixed observation window.
+  AND evt_block_time >= TIMESTAMP '2020-12-17 21:19:44'
+
+  AND evt_block_time <= TIMESTAMP '2022-07-25 22:08:54'
+
+  -- Enforce the AMM paper's block range.
+  AND evt_block_number BETWEEN 10000835 AND 15400000
+
+ORDER BY
+    evt_block_number,
+    evt_index;

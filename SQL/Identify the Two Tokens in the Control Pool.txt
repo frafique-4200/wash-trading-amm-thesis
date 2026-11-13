@@ -1,0 +1,10 @@
+SELECT DISTINCT
+    token_bought_symbol,
+    token_bought_address,
+    token_sold_symbol,
+    token_sold_address
+FROM dex.trades
+WHERE blockchain = 'ethereum'
+  AND project = 'uniswap'
+  AND version = '2'
+  AND project_contract_address = 0x5b81f9b009270f2b57ae7d107199ff567d852064;

@@ -1,0 +1,10 @@
+SELECT
+    contract_address,
+    symbol,
+    decimals
+FROM tokens.erc20
+WHERE blockchain = 'ethereum'
+  AND contract_address IN (
+      0x006c7b41fafe9d8e105b90bb5e035c4314f62676,
+      0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+  );

@@ -1,0 +1,21 @@
+SELECT
+    block_time,
+    block_number,
+    hash,
+    "from",
+    "to",
+    value
+FROM ethereum.transactions
+WHERE block_number BETWEEN 10000835 AND 15400000
+  AND value > 0
+  AND (
+    (
+      "from" = 0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+      AND "to" = 0x5b4b2f2a16dd1904babb54d49887416f4705512e
+    )
+    OR
+    (
+      "from" = 0x5b4b2f2a16dd1904babb54d49887416f4705512e
+      AND "to" = 0xd61b5e607bdf060f196aab0319fc7d8a2fc6bd9b
+    )
+  );

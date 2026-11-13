@@ -1,0 +1,6 @@
+SELECT *
+FROM uniswap_v2_ethereum.pair_evt_swap
+WHERE contract_address = 0x5b81f9b009270f2b57ae7d107199ff567d852064
+  AND evt_block_time >= TIMESTAMP '2020-12-02 18:47:28'
+  AND evt_block_time <= TIMESTAMP '2020-12-02 19:50:25'
+ORDER BY evt_block_number, evt_index;

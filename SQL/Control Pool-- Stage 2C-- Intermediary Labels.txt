@@ -1,0 +1,170 @@
+-- ============================================================
+-- CONTROL POOL
+-- STAGE 2C — INTERMEDIARY LABEL CHECK
+--
+-- PURPOSE
+-- ============================================================
+--
+-- Stage 2B identified addresses that create possible
+-- 2-hop ETH-transfer relationships between candidate
+-- transaction initiators:
+--
+--     Sender A
+--        |
+--     Intermediary
+--        |
+--     Sender B
+--
+-- However, a public service address such as a DEX, CEX,
+-- aggregator, bridge, lending protocol, etc. can connect
+-- otherwise unrelated users.
+--
+-- Therefore, before accepting a 2-hop relationship as
+-- evidence of common entity control, we check whether each
+-- intermediary is already identified as a public/service
+-- address in Dune's owner-address labels.
+--
+-- This is the SAME label-check logic used for the suspicious
+-- pool. Only the intermediary-address list is different.
+--
+-- ============================================================
+
+
+-- ============================================================
+-- STEP 1 — DEFINE THE 40 UNIQUE INTERMEDIARIES FROM STAGE 2B
+-- ============================================================
+
+WITH intermediary_addresses(address) AS (
+
+    VALUES
+
+        (0x0fabaf48bbf864a3947bdd0ba9d764791a60467a),
+
+        (0x11111112542d85b3ef69ae05771c2dccff4faa26),
+
+        (0x111111125434b319222cdbf8c261674adb56f3ae),
+
+        (0x1111111254fb6c44bac0bed2854e76f90643097d),
+
+        (0x15c7d8ba5d18fa7abd196c9bd4f457c4e73d0cb2),
+
+        (0x165cd37b4c644c2921454429e7f9358d18a45e14),
+
+        (0x1b829b926a14634d36625e60165c0770c09d02b2),
+
+        (0x225144eb43913b30b6c1f43c9b72698bcd28a3bb),
+
+        (0x273ba31c706b9d9fdae1fd999183bfa865895be9),
+
+        (0x283af0b28c62c092c9727f1ee09c02ca627eb7f5),
+
+        (0x30b8235f492265a734347c0bf36e2ffcad887be2),
+
+        (0x3980c9ed79d2c191a89e02fa3529c60ed6e9c04b),
+
+        (0x3e66b66fd1d0b02fda6c811da9e0547970db2f21),
+
+        (0x4ba6ddd7b89ed838fed25d208d4f644106e34279),
+
+        (0x4c46eee280eea9c16ae93be7ca499a23f6f000bf),
+
+        (0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f),
+
+        (0x52ec2f3d7c5977a8e558c8d9c6000b615098e8fc),
+
+        (0x564286362092d8e7936f0549571a803b203aaced),
+
+        (0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45),
+
+        (0x73282a63f0e3d7e9604575420f777361eca3c86a),
+
+        (0x75e89d5979e4f6fba9f97c104c2f0afb3f1dcb88),
+
+        (0x7a250d5630b4cf539739df2c5dacb4c659f2488d),
+
+        (0x7be8076f4ea4a4ad08075c2508e481d6c946d12b),
+
+        (0x7f268357a8c2552623316e2562d90e642bb538e5),
+
+        (0x8620121c74da24b7718849d3e6a57fad9c2b098c),
+
+        (0x986a2fca9eda0e06fbf7839b89bfc006ee2a23dd),
+
+        (0xa0c68c638235ee32657e8f720a23cec1bfc77c77),
+
+        (0xa68dd8cb83097765263adad881af6eed479c4a33),
+
+        (0xabea9132b05a70803a4e85094fd0e1800777fbef),
+
+        (0xba12222222228d8ba445958a75a0704d566bf2c8),
+
+        (0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2),
+
+        (0xc098b2a3aa256d2140208c3de6543aaef5cd3a94),
+
+        (0xc280ac0b1b91d1d9cc1fe42f7725d053fd7b4978),
+
+        (0xc6dd29b5564bf79a5c1213632992601e1c243a97),
+
+        (0xccc441ac31f02cd96c153db6fd5fe0a2f4e6a68d),
+
+        (0xcd4ec7b66fbc029c116ba9ffb3e59351c20b5b06),
+
+        (0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f),
+
+        (0xdef1c0ded9bec7f1a1670819833240f027b25eff),
+
+        (0xe00f0b99146358b5642453d40ad50b48fcb710d5),
+
+        (0xe592427a0aece92de3edee1f18e0157c05861564)
+)
+
+
+-- ============================================================
+-- STEP 2 — CHECK DUNE OWNER-ADDRESS LABELS
+-- ============================================================
+--
+-- labels.owner_addresses provides higher-level ownership /
+-- custody information for known Ethereum addresses.
+--
+-- A populated owner_key or custody_owner can indicate that
+-- an intermediary belongs to an identifiable service.
+--
+-- We use a LEFT JOIN because we want ALL 40 intermediary
+-- addresses returned, including addresses for which Dune
+-- currently has no owner label.
+--
+-- An unlabeled address is NOT automatically treated as a
+-- private address. It simply means that this specific Dune
+-- label table did not identify it.
+
+
+SELECT
+
+    -- Intermediary discovered in Stage 2B.
+    i.address,
+
+
+    -- Dune owner identifier, when available.
+    oa.owner_key,
+
+
+    -- Custodial/service owner, when available.
+    oa.custody_owner
+
+
+FROM intermediary_addresses i
+
+
+LEFT JOIN labels.owner_addresses oa
+
+    ON i.address = oa.address
+
+
+-- ============================================================
+-- STEP 3 — SORT FOR EASY REVIEW
+-- ============================================================
+
+ORDER BY
+
+    i.address;

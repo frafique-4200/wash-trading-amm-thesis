@@ -1,0 +1,327 @@
+-- =====================================================================
+-- QUERY 11
+-- FIND ACTIVITY-MATCHED CONTROL-POOL CANDIDATES
+-- FOR THE ECO-USDT AND wCELO SUSPICIOUS POOLS
+-- =====================================================================
+--
+-- PURPOSE
+--
+-- This query searches for possible control pools corresponding to the
+-- two newly selected suspicious pools:
+--
+--   1. ECO-USDT
+--   2. wCELO
+--
+-- A possible control pool must:
+--
+--   1. Be a Uniswap V2 pool
+--   2. Not appear in the AMM paper's published abnormal-pool dataset
+--   3. Be evaluated during the same period as the corresponding
+--      suspicious pool
+--   4. Have a raw-Swap count close to the suspicious pool's count
+--
+-- The query returns the ten closest control candidates for each
+-- suspicious pool.
+--
+-- IMPORTANT
+--
+-- Absence from the abnormal-pool dataset does not prove that a pool is
+-- free from wash trading. It means only that the pool is not included
+-- in the authors' published abnormal-pool list.
+-- =====================================================================
+
+
+-- =====================================================================
+-- STEP 1 — DEFINE THE TWO CONTROL-MATCHING TARGETS
+-- =====================================================================
+--
+-- For each suspicious pool, we specify:
+--
+--   comparison_name
+--       Identifies which suspicious pool requires a control.
+--
+--   observation_start
+--       Timestamp of the suspicious pool's first raw Swap event within
+--       the paper's block range.
+--
+--   observation_end
+--       Timestamp of the suspicious pool's last raw Swap event within
+--       the paper's block range.
+--
+--   target_swap_count
+--       Total number of raw Swap events in the suspicious pool during
+--       that period.
+--
+-- These values come from the verified Query 10.1 output.
+-- =====================================================================
+
+WITH control_targets AS (
+
+    SELECT
+        'ECO-USDT control' AS comparison_name,
+
+        TIMESTAMP '2020-11-09 12:13:04'
+            AS observation_start,
+
+        TIMESTAMP '2022-08-23 10:54:06'
+            AS observation_end,
+
+        CAST(9449 AS BIGINT)
+            AS target_swap_count
+
+    UNION ALL
+
+    SELECT
+        'wCELO control' AS comparison_name,
+
+        TIMESTAMP '2020-12-17 21:19:44'
+            AS observation_start,
+
+        TIMESTAMP '2022-07-25 22:08:54'
+            AS observation_end,
+
+        CAST(11417 AS BIGINT)
+            AS target_swap_count
+),
+
+
+-- =====================================================================
+-- STEP 2 — PREPARE THE ABNORMAL-POOL LIST
+-- =====================================================================
+--
+-- The authors' abnormal-pool dataset contains pools identified as
+-- abnormal by the AMM-paper method.
+--
+-- Pools appearing in this list are excluded from control consideration.
+--
+-- DISTINCT prevents duplicated pool addresses from affecting the count.
+-- =====================================================================
+
+abnormal_pools AS (
+
+    SELECT DISTINCT
+        pool
+
+    FROM dune.basilisk42004190.dataset_abnormal_pools
+),
+
+
+-- =====================================================================
+-- STEP 3 — COUNT RAW SWAPS FOR EVERY POSSIBLE CONTROL POOL
+-- =====================================================================
+--
+-- uniswap_v2_ethereum.pair_evt_swap contains raw Swap events emitted by
+-- Uniswap V2 pool contracts.
+--
+-- For each suspicious-pool observation period, this step:
+--
+--   1. finds every Uniswap V2 pool active during that period;
+--   2. excludes pools appearing in abnormal_pools;
+--   3. counts the raw Swap events produced by every remaining pool.
+--
+-- The paper's block limits are included explicitly:
+--
+--   starting block = 10,000,835
+--   ending block   = 15,400,000
+--
+-- The timestamps already fall within these boundaries, but including
+-- the block restriction documents and enforces the paper's scope.
+-- =====================================================================
+
+control_pool_counts AS (
+
+    SELECT
+        t.comparison_name,
+
+        t.observation_start,
+
+        t.observation_end,
+
+        t.target_swap_count,
+
+        s.contract_address
+            AS control_pool,
+
+        COUNT(*)
+            AS control_swap_count
+
+    FROM control_targets AS t
+
+    INNER JOIN uniswap_v2_ethereum.pair_evt_swap AS s
+
+        ON s.evt_block_time >= t.observation_start
+
+       AND s.evt_block_time <= t.observation_end
+
+       AND s.evt_block_number BETWEEN 10000835 AND 15400000
+
+    LEFT JOIN abnormal_pools AS a
+
+        ON s.contract_address = a.pool
+
+    -- Retain only pools absent from the abnormal-pool dataset.
+    WHERE a.pool IS NULL
+
+    GROUP BY
+        t.comparison_name,
+        t.observation_start,
+        t.observation_end,
+        t.target_swap_count,
+        s.contract_address
+),
+
+
+-- =====================================================================
+-- STEP 4 — MEASURE THE DIFFERENCE IN TRADING ACTIVITY
+-- =====================================================================
+--
+-- absolute_swap_difference
+--
+--     The absolute numerical difference between the control candidate's
+--     raw-Swap count and the suspicious pool's raw-Swap count.
+--
+--     Example:
+--
+--         suspicious pool = 9,449 swaps
+--         control pool    = 9,500 swaps
+--
+--         absolute difference = |9,500 - 9,449| = 51 swaps
+--
+--
+-- percentage_difference
+--
+--     Expresses the absolute difference as a percentage of the
+--     suspicious pool's raw-Swap count.
+--
+--     Formula:
+--
+--         absolute swap difference
+--         ------------------------ × 100
+--         suspicious-pool swaps
+--
+-- Smaller values indicate closer activity matching.
+-- =====================================================================
+
+activity_differences AS (
+
+    SELECT
+        comparison_name,
+
+        observation_start,
+
+        observation_end,
+
+        target_swap_count,
+
+        control_pool,
+
+        control_swap_count,
+
+        ABS(control_swap_count - target_swap_count)
+            AS absolute_swap_difference,
+
+        100.0
+            * CAST(
+                ABS(control_swap_count - target_swap_count)
+                AS DOUBLE
+              )
+            / CAST(target_swap_count AS DOUBLE)
+            AS percentage_difference
+
+    FROM control_pool_counts
+),
+
+
+-- =====================================================================
+-- STEP 5 — RANK THE CONTROL-POOL CANDIDATES
+-- =====================================================================
+--
+-- ROW_NUMBER ranks candidates separately for ECO-USDT and wCELO:
+--
+--   candidate_rank = 1
+--       Closest raw-Swap count
+--
+--   candidate_rank = 2
+--       Second-closest raw-Swap count
+--
+--   and so forth.
+--
+-- The control-pool address is used as a secondary sorting condition.
+-- This ensures stable ordering when two pools have the same difference.
+-- =====================================================================
+
+ranked_candidates AS (
+
+    SELECT
+        comparison_name,
+
+        observation_start,
+
+        observation_end,
+
+        target_swap_count,
+
+        control_pool,
+
+        control_swap_count,
+
+        absolute_swap_difference,
+
+        percentage_difference,
+
+        ROW_NUMBER() OVER (
+
+            PARTITION BY comparison_name
+
+            ORDER BY
+                absolute_swap_difference ASC,
+                control_pool ASC
+        )
+            AS candidate_rank
+
+    FROM activity_differences
+)
+
+
+-- =====================================================================
+-- STEP 6 — RETURN THE TEN CLOSEST CANDIDATES FOR EACH SUSPICIOUS POOL
+-- =====================================================================
+--
+-- The output should contain:
+--
+--   10 potential controls for ECO-USDT
+--   10 potential controls for wCELO
+--
+-- A maximum of 20 rows should therefore be returned.
+--
+-- We will inspect the candidates before fixing the final controls.
+-- Candidate rank 1 should not be accepted automatically without
+-- checking the pool's identity and suitability.
+-- =====================================================================
+
+SELECT
+    comparison_name,
+
+    candidate_rank,
+
+    observation_start,
+
+    observation_end,
+
+    target_swap_count,
+
+    control_pool,
+
+    control_swap_count,
+
+    absolute_swap_difference,
+
+    percentage_difference
+
+FROM ranked_candidates
+
+WHERE candidate_rank <= 10
+
+ORDER BY
+    comparison_name ASC,
+    candidate_rank ASC;

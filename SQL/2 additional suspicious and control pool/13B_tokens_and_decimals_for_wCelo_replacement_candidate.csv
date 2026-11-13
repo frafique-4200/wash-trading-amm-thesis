@@ -1,0 +1,2 @@
+comparison_name,pool_role,pool_address,token0_address,token0_symbol,token0_decimals,token1_address,token1_symbol,token1_decimals
+wCELO comparison,control,0xfe7444f63e0010a7208529608eb173760629483b,0x1c9922314ed1415c95b9fd453c3818fd41867d0b,TOWER,18,0x557b933a7c2c45672b610f8954a3deb39a51a8ca,REVV,18
