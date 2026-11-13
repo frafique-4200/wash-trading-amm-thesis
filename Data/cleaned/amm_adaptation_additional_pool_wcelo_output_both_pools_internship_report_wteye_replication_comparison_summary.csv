@@ -1,0 +1,4 @@
+"sample","total_swap_events","reference_selected","wteye_selected","shared","reference_only","wteye_only","neither","reference_coverage_pct","missed_reference_pct","extra_wteye_pct","wteye_selected_overlap_pct","jaccard_pct"
+"suspicious_pool",11417,3019,2278,1883,1136,395,8003,62.371646240477,37.628353759523,17.3397717295874,82.6602282704126,55.1552431165788
+"control_pool",6459,2,22,2,0,20,6437,100,0,90.9090909090909,9.09090909090909,9.09090909090909
+"both_pools",17876,3021,2300,1885,1136,415,14440,62.3965574313141,37.6034425686859,18.0434782608696,81.9565217391304,54.860302677532

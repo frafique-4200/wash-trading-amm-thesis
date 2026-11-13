@@ -1,0 +1,4 @@
+"sample","stage2_surviving_groups","candidate_member_rows","unique_candidate_events","unique_transactions","unique_blocks","stage3_status"
+"suspicious_pool",1613,6633,3238,3238,3132,"EVIDENCE_PREPARATION_ONLY"
+"control_pool",24,53,49,49,47,"EVIDENCE_PREPARATION_ONLY"
+"both_pools",1637,6686,3287,3287,3179,"EVIDENCE_PREPARATION_ONLY"

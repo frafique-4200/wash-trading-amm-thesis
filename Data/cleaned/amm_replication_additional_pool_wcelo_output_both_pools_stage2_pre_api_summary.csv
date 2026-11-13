@@ -1,0 +1,4 @@
+"sample","stage1_candidate_groups","same_sender_automatic_pass_groups","multi_initiator_candidate_groups","cross_combination_pass_groups","local_stage2_pass_groups","entity_evidence_required_groups","detailed_candidate_pair_rows","unique_entity_evidence_addresses","unique_entity_evidence_pairs","external_eth_evidence_status","final_stage2_status"
+"suspicious_pool",2622,882,1740,62,944,1678,5870,257,870,"NOT_RUN","NOT_AVAILABLE_UNTIL_EXTERNAL_EVIDENCE"
+"control_pool",327,9,318,0,9,318,2316,272,1253,"NOT_RUN","NOT_AVAILABLE_UNTIL_EXTERNAL_EVIDENCE"
+"both_pools",2949,891,2058,62,953,1996,8186,511,2123,"NOT_RUN","NOT_AVAILABLE_UNTIL_EXTERNAL_EVIDENCE"

@@ -1,0 +1,3 @@
+"candidate_id","start_swap","end_swap","number_swaps","number_senders","same_sender","cross_combination","entity_distance","entity_relationship","stage2_pass"
+1,17,18,2,1,TRUE,FALSE,0,TRUE,TRUE
+2,32,33,2,2,FALSE,FALSE,2,TRUE,TRUE

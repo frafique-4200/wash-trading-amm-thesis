@@ -1,0 +1,3 @@
+"candidate_group_id","token_slot","event_key","n_swap_events","n_initiators","first_block","last_block","block_span","source_window_start","source_window_end","pass","contiguous_in_sample","mean_amount_scaled","max_abs_balance_over_mean","pool_abs_balance_over_mean","margin","classification"
+"suspicious_pool_G001","token0","17;18",2,1,11374876,11374889,13,12,18,1,TRUE,"0.0080588241340237479","0.032855628211291073","0.032855628211291073","0.10000000000000001","STRUCTURAL_BALANCE_CANDIDATE"
+"suspicious_pool_G001","token1","17;18",2,1,11374876,11374889,13,12,18,1,TRUE,"0.25337227831007947","0.026619157648749888","0.026619157648749888","0.10000000000000001","STRUCTURAL_BALANCE_CANDIDATE"

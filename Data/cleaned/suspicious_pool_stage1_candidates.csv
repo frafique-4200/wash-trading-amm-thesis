@@ -1,0 +1,3 @@
+"window_id","start_swap","end_swap","group_size","start_block","end_block","block_span","ratio_RFI","ratio_WETH","time_condition","restoration_condition","coarse_filter_pass","start_tx_hash","end_tx_hash"
+17,17,18,2,11374876,11374889,13,0.0164278141056456,0.0133095788243749,TRUE,TRUE,TRUE,"0xddf048be43bb9ba15174234493b0b91dfda8ba268246191921556bd82adef228","0xaab69a34d189fa3f7062b67b11ae722dffde736ea97bc0790cd0d475ace6e7bb"
+32,32,33,2,11374994,11375001,7,0.0494882606229943,0.0463020941300619,TRUE,TRUE,TRUE,"0xad2a6f82167b2a62e19ead1af47f57635a9c6cb37128a10d2aa61fb8318f03c4","0xdd990ce43fec4d3ad42f5edc91839162e76c376840c0050d0c243e3c47ff8c94"

@@ -1,0 +1,4 @@
+"sample","stage1_candidate_groups","local_stage2_pass_groups","entity_graph_tested_groups","connected_entity_graph_pass_groups","entity_graph_fail_groups","final_stage2_pass_groups","final_stage2_fail_groups","external_eth_evidence_status","stage3_mev_status"
+"suspicious_pool",2622,944,1678,669,1009,1613,1009,"COMPLETE","NOT_RUN"
+"control_pool",327,9,318,15,303,24,303,"COMPLETE","NOT_RUN"
+"both_pools",2949,953,1996,684,1312,1637,1312,"COMPLETE","NOT_RUN"

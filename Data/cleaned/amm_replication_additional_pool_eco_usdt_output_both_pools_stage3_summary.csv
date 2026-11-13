@@ -1,0 +1,4 @@
+"sample","stage2_groups","sandwich_groups","multipool_groups","cross_protocol_groups","rebase_groups","excluded_groups","review_groups","retained_groups","retained_unique_swaps"
+"suspicious_pool",8280,188,1348,14,0,1485,0,6795,4584
+"control_pool",77,0,77,3,0,77,0,0,0
+"both_pools",8357,188,1425,17,0,1562,0,6795,4584

@@ -1,0 +1,4 @@
+"sample","method","group_id","event_key","number_of_swaps","exact_matching_other_group_ids","overlapping_other_group_ids","maximum_shared_swaps","group_comparison_outcome","comparison_status"
+"suspicious_pool","INTERNSHIP_REPORT_WTEYE_REQUIRE_CONSECUTIVE","suspicious_pool_IRW_G001","17;18",2,"replication_suspicious_pool_C001","replication_suspicious_pool_C001",2,"EXACT_GROUP_MATCH","METHOD_COMPARISON_NOT_GROUND_TRUTH"
+"suspicious_pool","REDUCED_SCALE_AMM_PAPER_REPLICATION","replication_suspicious_pool_C001","17;18",2,"suspicious_pool_IRW_G001","suspicious_pool_IRW_G001",2,"EXACT_GROUP_MATCH","METHOD_COMPARISON_NOT_GROUND_TRUTH"
+"suspicious_pool","REDUCED_SCALE_AMM_PAPER_REPLICATION","replication_suspicious_pool_C002","32;33",2,"","",0,"NO_GROUP_OVERLAP","METHOD_COMPARISON_NOT_GROUND_TRUTH"

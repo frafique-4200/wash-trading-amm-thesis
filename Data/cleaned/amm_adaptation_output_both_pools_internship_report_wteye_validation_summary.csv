@@ -1,0 +1,3 @@
+"sample","token_match_rows_checked","candidate_groups_recomputed","candidate_swap_events_recomputed","candidate_transactions_recomputed","candidate_initiators_recomputed","both_token_candidate_swaps_recomputed","token0_candidate_swaps_recomputed","token1_candidate_swaps_recomputed","prepared_input_md5_matches","labeled_identifiers_match_prepared","token_flags_match","candidate_group_ids_match","classifications_match","summary_counts_match","all_candidate_recalculations_pass","overall_validation"
+"suspicious_pool",2,1,2,2,1,2,2,2,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,"PASS"
+"control_pool",10,6,8,8,3,6,6,8,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,"PASS"

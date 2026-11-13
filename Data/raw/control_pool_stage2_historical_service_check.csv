@@ -1,0 +1,41 @@
+address,owner_key,custody_owner,account_owner,contract_name,eoa,source,source_website,source_evidence,entity_name,primary_category,category_tags,cex_name,deposit_cex_name,deposit_first_block_time,contract_deployed_at,contract_deployed_block,contract_existed_by_candidate_time
+0x0fabaf48bbf864a3947bdd0ba9d764791a60467a,ribbon,ribbon,<nil>,RibbonThetaVault,<nil>,<nil>,<nil>,<nil>,ribbon,Derivatives,Lending,<nil>,<nil>,<nil>,2021-03-31 13:19:45.000 UTC,1.2147345e+07,false
+0x11111112542d85b3ef69ae05771c2dccff4faa26,1inch,1inch,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,1inch,Decentralized Exchange,Decentralized Exchange,<nil>,<nil>,<nil>,2021-03-14 20:28:50.000 UTC,1.2038853e+07,false
+0x111111125434b319222cdbf8c261674adb56f3ae,1inch,1inch,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,1inch,Decentralized Exchange,Decentralized Exchange,<nil>,<nil>,<nil>,2020-11-04 12:57:18.000 UTC,1.1190787e+07,true
+0x1111111254fb6c44bac0bed2854e76f90643097d,1inch,1inch,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,1inch,Decentralized Exchange,Decentralized Exchange,<nil>,<nil>,<nil>,2021-11-05 10:18:09.000 UTC,1.3556016e+07,false
+0x15c7d8ba5d18fa7abd196c9bd4f457c4e73d0cb2,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,false
+0x165cd37b4c644c2921454429e7f9358d18a45e14,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,false
+0x1b829b926a14634d36625e60165c0770c09d02b2,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2021-07-31 15:52:37.000 UTC,1.2934234e+07,false
+0x225144eb43913b30b6c1f43c9b72698bcd28a3bb,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2021-09-02 18:14:21.000 UTC,1.3147822e+07,false
+0x273ba31c706b9d9fdae1fd999183bfa865895be9,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,false
+0x283af0b28c62c092c9727f1ee09c02ca627eb7f5,ethereumnameservice,Ethereum Name Service,<nil>,BaseRegistrarImplementation,<nil>,<nil>,<nil>,<nil>,Ethereum Name Service,Onchain Namespaces,<nil>,<nil>,<nil>,<nil>,2020-01-30 00:56:38.000 UTC,9.380471e+06,true
+0x30b8235f492265a734347c0bf36e2ffcad887be2,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,false
+0x3980c9ed79d2c191a89e02fa3529c60ed6e9c04b,metis,Metis,<nil>,L1StandardBridge,<nil>,<nil>,<nil>,<nil>,Metis,Blockchain,<nil>,<nil>,<nil>,<nil>,2021-11-16 15:40:08.000 UTC,1.3627429e+07,false
+0x3e66b66fd1d0b02fda6c811da9e0547970db2f21,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2020-08-25 16:13:47.000 UTC,1.0730576e+07,true
+0x4ba6ddd7b89ed838fed25d208d4f644106e34279,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2020-07-02 08:01:52.000 UTC,1.037879e+07,true
+0x4c46eee280eea9c16ae93be7ca499a23f6f000bf,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,false
+0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f,arbitrum,arbitrum,<nil>,Inbox,<nil>,<nil>,<nil>,<nil>,arbitrum,Token Issuance,<nil>,<nil>,<nil>,<nil>,2021-05-28 23:09:04.000 UTC,1.25257e+07,false
+0x52ec2f3d7c5977a8e558c8d9c6000b615098e8fc,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2022-04-16 07:29:15.000 UTC,1.4595007e+07,false
+0x564286362092d8e7936f0549571a803b203aaced,binance,binance,<nil>,<nil>,<nil>,<nil>,<nil>,cex.addresses,binance,Centralized Exchange,<nil>,Binance,<nil>,<nil>,<nil>,<nil>,false
+0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45,uniswap,Uniswap,<nil>,SwapRouter02,<nil>,<nil>,<nil>,<nil>,Uniswap,Decentralized Exchange,Lending,<nil>,<nil>,<nil>,2021-12-14 17:37:26.000 UTC,1.3804681e+07,false
+0x73282a63f0e3d7e9604575420f777361eca3c86a,skale,Skale,<nil>,Escrow,<nil>,<nil>,<nil>,<nil>,Skale,Blockchain,<nil>,<nil>,<nil>,<nil>,2020-08-03 04:03:51.000 UTC,1.0584551e+07,true
+0x75e89d5979e4f6fba9f97c104c2f0afb3f1dcb88,mexc,mexc,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,mexc,Centralized Exchange,<nil>,MEXC,<nil>,<nil>,<nil>,<nil>,false
+0x7a250d5630b4cf539739df2c5dacb4c659f2488d,uniswap,Uniswap,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,Uniswap,Decentralized Exchange,Lending,<nil>,<nil>,<nil>,2020-06-05 20:17:21.000 UTC,1.0207858e+07,true
+0x7be8076f4ea4a4ad08075c2508e481d6c946d12b,opensea,opensea,<nil>,WyvernExchange,<nil>,<nil>,<nil>,<nil>,opensea,Creators and brands,<nil>,<nil>,<nil>,<nil>,2018-06-12 07:10:36.000 UTC,5.774644e+06,true
+0x7f268357a8c2552623316e2562d90e642bb538e5,opensea,opensea,<nil>,WyvernExchange,<nil>,<nil>,<nil>,<nil>,opensea,Creators and brands,<nil>,<nil>,<nil>,<nil>,2022-02-01 15:30:32.000 UTC,1.4120913e+07,false
+0x8620121c74da24b7718849d3e6a57fad9c2b098c,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2021-07-17 04:23:13.000 UTC,1.2842167e+07,false
+0x986a2fca9eda0e06fbf7839b89bfc006ee2a23dd,ascendex,AscendEX,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,AscendEX,Centralized Exchange,<nil>,AscendEX,<nil>,<nil>,<nil>,<nil>,false
+0xa0c68c638235ee32657e8f720a23cec1bfc77c77,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2020-08-26 10:09:07.000 UTC,1.0735437e+07,true
+0xa68dd8cb83097765263adad881af6eed479c4a33,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2022-01-13 07:04:25.000 UTC,1.3995722e+07,false
+0xabea9132b05a70803a4e85094fd0e1800777fbef,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2020-06-15 10:58:27.000 UTC,1.026989e+07,true
+0xba12222222228d8ba445958a75a0704d566bf2c8,balancer,balancer,<nil>,Vault,<nil>,<nil>,<nil>,<nil>,balancer,Decentralized Exchange,<nil>,<nil>,<nil>,<nil>,2021-04-19 18:36:47.000 UTC,1.2272146e+07,false
+0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2,0x_api,0x API,<nil>,WETH9,<nil>,<nil>,<nil>,<nil>,0x API,Decentralized Exchange,<nil>,<nil>,<nil>,<nil>,2017-12-12 11:17:35.000 UTC,4.719568e+06,true
+0xc098b2a3aa256d2140208c3de6543aaef5cd3a94,ftx,FTX,<nil>,<nil>,<nil>,<nil>,https://etherscan.io/accounts/label/ftx,cex.addresses,FTX,Centralized Exchange,<nil>,FTX,<nil>,<nil>,<nil>,<nil>,false
+0xc280ac0b1b91d1d9cc1fe42f7725d053fd7b4978,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,false
+0xc6dd29b5564bf79a5c1213632992601e1c243a97,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,false
+0xccc441ac31f02cd96c153db6fd5fe0a2f4e6a68d,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2021-08-05 19:45:41.000 UTC,1.2966912e+07,false
+0xcd4ec7b66fbc029c116ba9ffb3e59351c20b5b06,rarible,rarible,<nil>,ExchangeV1,<nil>,<nil>,<nil>,<nil>,rarible,Creators and brands,<nil>,<nil>,<nil>,<nil>,2020-11-17 09:11:04.000 UTC,1.1274515e+07,true
+0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f,sushiswap,sushiswap,<nil>,Router02,<nil>,<nil>,<nil>,<nil>,sushiswap,Decentralized Exchange,<nil>,<nil>,<nil>,<nil>,2020-09-04 10:18:29.000 UTC,1.0794261e+07,true
+0xdef1c0ded9bec7f1a1670819833240f027b25eff,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2020-06-11 22:28:54.000 UTC,1.0247094e+07,true
+0xe00f0b99146358b5642453d40ad50b48fcb710d5,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,<nil>,2020-08-20 15:49:30.000 UTC,1.0697955e+07,true
+0xe592427a0aece92de3edee1f18e0157c05861564,uniswap,Uniswap,<nil>,SwapRouter,<nil>,<nil>,<nil>,<nil>,Uniswap,Decentralized Exchange,Lending,<nil>,<nil>,<nil>,2021-05-04 19:30:41.000 UTC,1.2369634e+07,false

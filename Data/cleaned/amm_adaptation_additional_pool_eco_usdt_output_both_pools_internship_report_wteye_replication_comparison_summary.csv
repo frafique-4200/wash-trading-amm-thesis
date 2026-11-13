@@ -1,0 +1,4 @@
+sample,total_swap_events,reference_selected,wteye_selected,shared,reference_only,wteye_only,neither,reference_coverage_pct,missed_reference_pct,extra_wteye_pct,wteye_selected_overlap_pct,jaccard_pct
+suspicious_pool,9449,4584,4653,3946,638,707,4158,86.0820244328098,13.9179755671902,15.1944981732216,84.8055018267784,74.5794745794746
+control_pool,7815,0,9,0,0,9,7806,,,100,0,0
+both_pools,17264,4584,4662,3946,638,716,11964,86.0820244328098,13.9179755671902,15.3582153582154,84.6417846417846,74.4528301886792

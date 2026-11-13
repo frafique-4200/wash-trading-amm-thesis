@@ -1,0 +1,3 @@
+"candidate_id","start_swap","end_swap","number_transactions","sandwich_same_block","sandwich_detected","decoded_multi_pool","raw_v2_multi_pool","unexpected_erc20_addresses","cross_protocol_review_required","ordinary_arbitrage_detected","rebase_arbitrage_detected","stage3_resolved","mev_exclusion_trigger","stage3_pass"
+1,17,18,2,FALSE,FALSE,FALSE,FALSE,0,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE
+2,32,33,2,FALSE,FALSE,FALSE,FALSE,0,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE

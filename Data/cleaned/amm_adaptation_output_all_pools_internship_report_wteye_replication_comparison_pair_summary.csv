@@ -1,0 +1,4 @@
+"scope","number_of_pools","total_swap_events","reference_selected","wteye_selected","shared","reference_only","wteye_only","neither","reference_coverage_pct","missed_reference_pct","extra_wteye_pct","wteye_selected_overlap_pct","jaccard_pct","chosen_adaptation_variant","interpretation_status"
+"original",2,75,4,2,2,2,0,71,50,50,0,100,50,"REQUIRE_CONSECUTIVE","METHOD_AGREEMENT_NOT_ACCURACY"
+"eco_usdt",2,17264,4584,4662,3946,638,716,11964,86.0820244328098,13.9179755671902,15.3582153582154,84.6417846417846,74.4528301886792,"REQUIRE_CONSECUTIVE","METHOD_AGREEMENT_NOT_ACCURACY"
+"wcelo",2,17876,3021,2300,1885,1136,415,14440,62.3965574313141,37.6034425686859,18.0434782608696,81.9565217391304,54.860302677532,"REQUIRE_CONSECUTIVE","METHOD_AGREEMENT_NOT_ACCURACY"

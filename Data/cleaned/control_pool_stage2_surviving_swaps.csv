@@ -1,0 +1,1 @@
+candidate_id,window_id,group_size,contract_address,evt_tx_hash,evt_tx_from,evt_tx_to,evt_tx_index,evt_index,evt_block_time,evt_block_number,evt_block_date,amount0In,amount0Out,amount1In,amount1Out,sender,to,evt_block_number_numeric,evt_index_numeric,swap_sequence,amount0In_token,amount0Out_token,amount1In_token,amount1Out_token,delta_WETH,delta_ANON

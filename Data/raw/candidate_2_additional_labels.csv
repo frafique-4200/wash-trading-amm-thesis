@@ -1,0 +1,220 @@
+blockchain,address,name,category,contributor,source,created_at,updated_at,model_name,label_type
+ethereum,0x056c04680bd0c4fe125ea612936b27dd59fa5b5a,$1k-$2k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x056c04680bd0c4fe125ea612936b27dd59fa5b5a,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x056c04680bd0c4fe125ea612936b27dd59fa5b5a,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x056c04680bd0c4fe125ea612936b27dd59fa5b5a,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x056c04680bd0c4fe125ea612936b27dd59fa5b5a,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x056c04680bd0c4fe125ea612936b27dd59fa5b5a,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x056c04680bd0c4fe125ea612936b27dd59fa5b5a,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x0c6bef54b3e238bf5ccd9268cdb2482dcf0f4a6f,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x0c6bef54b3e238bf5ccd9268cdb2482dcf0f4a6f,1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x0c6bef54b3e238bf5ccd9268cdb2482dcf0f4a6f,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x0c6bef54b3e238bf5ccd9268cdb2482dcf0f4a6f,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x0c6bef54b3e238bf5ccd9268cdb2482dcf0f4a6f,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x0c6bef54b3e238bf5ccd9268cdb2482dcf0f4a6f,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x0c6bef54b3e238bf5ccd9268cdb2482dcf0f4a6f,Sparse Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x0fdd3d1cdad6940f4deafb6d1d03c84562659f53,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x0fdd3d1cdad6940f4deafb6d1d03c84562659f53,Sparse Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x0fdd3d1cdad6940f4deafb6d1d03c84562659f53,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x0fdd3d1cdad6940f4deafb6d1d03c84562659f53,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x0fdd3d1cdad6940f4deafb6d1d03c84562659f53,<=$400 avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x0fdd3d1cdad6940f4deafb6d1d03c84562659f53,1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x0fdd3d1cdad6940f4deafb6d1d03c84562659f53,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x1510d0c3b68b1a00ae81b6dee818df71d2104c4d,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x1510d0c3b68b1a00ae81b6dee818df71d2104c4d,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x1510d0c3b68b1a00ae81b6dee818df71d2104c4d,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x1510d0c3b68b1a00ae81b6dee818df71d2104c4d,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x1510d0c3b68b1a00ae81b6dee818df71d2104c4d,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x1510d0c3b68b1a00ae81b6dee818df71d2104c4d,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x1510d0c3b68b1a00ae81b6dee818df71d2104c4d,1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x189983c7ee28b76886168774cd36960de4c7b24e,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x189983c7ee28b76886168774cd36960de4c7b24e,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x189983c7ee28b76886168774cd36960de4c7b24e,Sparse Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x189983c7ee28b76886168774cd36960de4c7b24e,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x189983c7ee28b76886168774cd36960de4c7b24e,<=$400 avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x189983c7ee28b76886168774cd36960de4c7b24e,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x189983c7ee28b76886168774cd36960de4c7b24e,1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x198f92d371d63cb55f52f32ac4e1aeabafcb70b0,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x198f92d371d63cb55f52f32ac4e1aeabafcb70b0,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x198f92d371d63cb55f52f32ac4e1aeabafcb70b0,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x198f92d371d63cb55f52f32ac4e1aeabafcb70b0,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x198f92d371d63cb55f52f32ac4e1aeabafcb70b0,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x198f92d371d63cb55f52f32ac4e1aeabafcb70b0,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x198f92d371d63cb55f52f32ac4e1aeabafcb70b0,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x1ee59e3774c30c33f7ebbd9da2731b6ad762fc37,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x1ee59e3774c30c33f7ebbd9da2731b6ad762fc37,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x1ee59e3774c30c33f7ebbd9da2731b6ad762fc37,1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x1ee59e3774c30c33f7ebbd9da2731b6ad762fc37,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x1ee59e3774c30c33f7ebbd9da2731b6ad762fc37,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x1ee59e3774c30c33f7ebbd9da2731b6ad762fc37,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x1ee59e3774c30c33f7ebbd9da2731b6ad762fc37,Sparse Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x279de1d68270d31a26ae3c84d825ab3a686672da,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x279de1d68270d31a26ae3c84d825ab3a686672da,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x279de1d68270d31a26ae3c84d825ab3a686672da,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x279de1d68270d31a26ae3c84d825ab3a686672da,<=$400 avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x279de1d68270d31a26ae3c84d825ab3a686672da,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x279de1d68270d31a26ae3c84d825ab3a686672da,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x279de1d68270d31a26ae3c84d825ab3a686672da,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x282e3f7c52ba6877aa85e3fa1b9a10a705104533,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x282e3f7c52ba6877aa85e3fa1b9a10a705104533,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x282e3f7c52ba6877aa85e3fa1b9a10a705104533,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x282e3f7c52ba6877aa85e3fa1b9a10a705104533,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x282e3f7c52ba6877aa85e3fa1b9a10a705104533,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x282e3f7c52ba6877aa85e3fa1b9a10a705104533,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x33d9eb7c6cf7e7dd98360b1e56bde25b18b1a89b,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x33d9eb7c6cf7e7dd98360b1e56bde25b18b1a89b,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x33d9eb7c6cf7e7dd98360b1e56bde25b18b1a89b,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x33d9eb7c6cf7e7dd98360b1e56bde25b18b1a89b,1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x33d9eb7c6cf7e7dd98360b1e56bde25b18b1a89b,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x33d9eb7c6cf7e7dd98360b1e56bde25b18b1a89b,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x3977febc1570b1bcbb1de6ea4e7eeadcaf3a0e32,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x3977febc1570b1bcbb1de6ea4e7eeadcaf3a0e32,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x3977febc1570b1bcbb1de6ea4e7eeadcaf3a0e32,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x3977febc1570b1bcbb1de6ea4e7eeadcaf3a0e32,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x3977febc1570b1bcbb1de6ea4e7eeadcaf3a0e32,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x3977febc1570b1bcbb1de6ea4e7eeadcaf3a0e32,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x438a28136e62a3ceb44a36fe18b76b69957755b9,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x438a28136e62a3ceb44a36fe18b76b69957755b9,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x438a28136e62a3ceb44a36fe18b76b69957755b9,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x438a28136e62a3ceb44a36fe18b76b69957755b9,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x438a28136e62a3ceb44a36fe18b76b69957755b9,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x438a28136e62a3ceb44a36fe18b76b69957755b9,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x438a28136e62a3ceb44a36fe18b76b69957755b9,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x58a1739c42e6b19838e04dfb834108298a7dc766,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x58a1739c42e6b19838e04dfb834108298a7dc766,$1k-$2k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x58a1739c42e6b19838e04dfb834108298a7dc766,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x58a1739c42e6b19838e04dfb834108298a7dc766,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x58a1739c42e6b19838e04dfb834108298a7dc766,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x58a1739c42e6b19838e04dfb834108298a7dc766,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x6ad2abc1cbfa4065f81896c1e8ab3c8168f310e6,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x6ad2abc1cbfa4065f81896c1e8ab3c8168f310e6,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x6ad2abc1cbfa4065f81896c1e8ab3c8168f310e6,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x6ad2abc1cbfa4065f81896c1e8ab3c8168f310e6,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x6ad2abc1cbfa4065f81896c1e8ab3c8168f310e6,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x6ad2abc1cbfa4065f81896c1e8ab3c8168f310e6,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x6b4c1edb19117979e80dd9796880726557426cf7,<=$400 avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x6b4c1edb19117979e80dd9796880726557426cf7,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x6b4c1edb19117979e80dd9796880726557426cf7,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x6b4c1edb19117979e80dd9796880726557426cf7,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x6b4c1edb19117979e80dd9796880726557426cf7,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x6b4c1edb19117979e80dd9796880726557426cf7,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x74c4257e9961b803194a4523ccf7eb43f49dc83c,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x74c4257e9961b803194a4523ccf7eb43f49dc83c,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x74c4257e9961b803194a4523ccf7eb43f49dc83c,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x74c4257e9961b803194a4523ccf7eb43f49dc83c,<=$400 avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x74c4257e9961b803194a4523ccf7eb43f49dc83c,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x74c4257e9961b803194a4523ccf7eb43f49dc83c,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x74c4257e9961b803194a4523ccf7eb43f49dc83c,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x7a250d5630b4cf539739df2c5dacb4c659f2488d,DEX Aggregator Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:57.796 UTC,dex_aggregator_traders,persona
+ethereum,0x7a250d5630b4cf539739df2c5dacb4c659f2488d,Number of DEXs traded on: 2,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x7a250d5630b4cf539739df2c5dacb4c659f2488d,Flashbots User,infrastructure,hildobby,query,2022-10-08 00:00:00.000 UTC,2026-09-05 03:15:04.736 UTC,flashbots,persona
+ethereum,0x7a250d5630b4cf539739df2c5dacb4c659f2488d,Uniswap_v2: Router02,contracts,soispoke,query,2022-09-26 00:00:00.000 UTC,2026-09-05 03:14:45.644 UTC,contracts,identifier
+ethereum,0x7a250d5630b4cf539739df2c5dacb4c659f2488d,Uniswap_v2: UniswapV2Factory,contracts,soispoke,query,2022-09-26 00:00:00.000 UTC,2026-09-05 03:14:45.644 UTC,contracts,identifier
+ethereum,0x7a250d5630b4cf539739df2c5dacb4c659f2488d,$2k-$5k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x7a250d5630b4cf539739df2c5dacb4c659f2488d,"Uniswap, Bitget_dex_aggregator User",dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x7a250d5630b4cf539739df2c5dacb4c659f2488d,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x7a250d5630b4cf539739df2c5dacb4c659f2488d,5 years old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x7a250d5630b4cf539739df2c5dacb4c659f2488d,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x80d5d9274f71afecad34e09df1693e7d94c5d4fb,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x80d5d9274f71afecad34e09df1693e7d94c5d4fb,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x80d5d9274f71afecad34e09df1693e7d94c5d4fb,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x80d5d9274f71afecad34e09df1693e7d94c5d4fb,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x80d5d9274f71afecad34e09df1693e7d94c5d4fb,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x80d5d9274f71afecad34e09df1693e7d94c5d4fb,Sparse Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x80d5d9274f71afecad34e09df1693e7d94c5d4fb,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x86f644c23ec91e84577f9332410d018b01c3c079,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x86f644c23ec91e84577f9332410d018b01c3c079,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x86f644c23ec91e84577f9332410d018b01c3c079,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x86f644c23ec91e84577f9332410d018b01c3c079,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0x86f644c23ec91e84577f9332410d018b01c3c079,<=$400 avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x86f644c23ec91e84577f9332410d018b01c3c079,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x8c9e160d03a98d177b1d10fc863af5b6e37815cf,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0x8c9e160d03a98d177b1d10fc863af5b6e37815cf,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0x8c9e160d03a98d177b1d10fc863af5b6e37815cf,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0x8c9e160d03a98d177b1d10fc863af5b6e37815cf,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0x8c9e160d03a98d177b1d10fc863af5b6e37815cf,<=$400 avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0x8c9e160d03a98d177b1d10fc863af5b6e37815cf,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0x8c9e160d03a98d177b1d10fc863af5b6e37815cf,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xa4ffae1d8462e09a45d7bb16f4b81049b0a4bef6,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xa4ffae1d8462e09a45d7bb16f4b81049b0a4bef6,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xa4ffae1d8462e09a45d7bb16f4b81049b0a4bef6,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xa4ffae1d8462e09a45d7bb16f4b81049b0a4bef6,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xa4ffae1d8462e09a45d7bb16f4b81049b0a4bef6,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xa4ffae1d8462e09a45d7bb16f4b81049b0a4bef6,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xa4ffae1d8462e09a45d7bb16f4b81049b0a4bef6,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xa7aafd1d834e5a9f4b835d8634eb96a610539cec,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xa7aafd1d834e5a9f4b835d8634eb96a610539cec,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xa7aafd1d834e5a9f4b835d8634eb96a610539cec,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xa7aafd1d834e5a9f4b835d8634eb96a610539cec,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xa7aafd1d834e5a9f4b835d8634eb96a610539cec,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xa7aafd1d834e5a9f4b835d8634eb96a610539cec,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xa7aafd1d834e5a9f4b835d8634eb96a610539cec,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xabbf27da19c48dd79e54f32eb0e634441cec6a49,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xabbf27da19c48dd79e54f32eb0e634441cec6a49,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xabbf27da19c48dd79e54f32eb0e634441cec6a49,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xabbf27da19c48dd79e54f32eb0e634441cec6a49,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xabbf27da19c48dd79e54f32eb0e634441cec6a49,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xabbf27da19c48dd79e54f32eb0e634441cec6a49,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xabbf27da19c48dd79e54f32eb0e634441cec6a49,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xc34b6878fa1801c8831399f4dde815c978e71c8a,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xc34b6878fa1801c8831399f4dde815c978e71c8a,1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xc34b6878fa1801c8831399f4dde815c978e71c8a,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xc34b6878fa1801c8831399f4dde815c978e71c8a,Sparse Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xc34b6878fa1801c8831399f4dde815c978e71c8a,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xc34b6878fa1801c8831399f4dde815c978e71c8a,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xc34b6878fa1801c8831399f4dde815c978e71c8a,<=$400 avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xcb1b77842a9c6e510605734ecd730efc7a0d0960,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xcb1b77842a9c6e510605734ecd730efc7a0d0960,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xcb1b77842a9c6e510605734ecd730efc7a0d0960,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xcb1b77842a9c6e510605734ecd730efc7a0d0960,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xcb1b77842a9c6e510605734ecd730efc7a0d0960,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xcb1b77842a9c6e510605734ecd730efc7a0d0960,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xcb1b77842a9c6e510605734ecd730efc7a0d0960,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xcd4cd514a69493684185bd2fc9220997703255f1,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xcd4cd514a69493684185bd2fc9220997703255f1,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xcd4cd514a69493684185bd2fc9220997703255f1,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xcd4cd514a69493684185bd2fc9220997703255f1,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xcd4cd514a69493684185bd2fc9220997703255f1,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xcd4cd514a69493684185bd2fc9220997703255f1,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xcd4cd514a69493684185bd2fc9220997703255f1,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xd07a34952095f778b919085017d307faac0046d9,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xd07a34952095f778b919085017d307faac0046d9,<=$400 avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xd07a34952095f778b919085017d307faac0046d9,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xd07a34952095f778b919085017d307faac0046d9,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xd07a34952095f778b919085017d307faac0046d9,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xd07a34952095f778b919085017d307faac0046d9,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xe068fac0fc2755fbe780326a4367e322da8510ea,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xe068fac0fc2755fbe780326a4367e322da8510ea,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xe068fac0fc2755fbe780326a4367e322da8510ea,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xe068fac0fc2755fbe780326a4367e322da8510ea,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xe068fac0fc2755fbe780326a4367e322da8510ea,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xe068fac0fc2755fbe780326a4367e322da8510ea,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xe068fac0fc2755fbe780326a4367e322da8510ea,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xe72b6dcef488b8a9b64d2f8fbbd44fa63c2fb6db,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xe72b6dcef488b8a9b64d2f8fbbd44fa63c2fb6db,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xe72b6dcef488b8a9b64d2f8fbbd44fa63c2fb6db,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xe72b6dcef488b8a9b64d2f8fbbd44fa63c2fb6db,Sparse Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xe72b6dcef488b8a9b64d2f8fbbd44fa63c2fb6db,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xe72b6dcef488b8a9b64d2f8fbbd44fa63c2fb6db,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xe72b6dcef488b8a9b64d2f8fbbd44fa63c2fb6db,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xea62d7e626d842ba53d32ec82a12e8d3943cf48d,$400-$1k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xea62d7e626d842ba53d32ec82a12e8d3943cf48d,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xea62d7e626d842ba53d32ec82a12e8d3943cf48d,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xea62d7e626d842ba53d32ec82a12e8d3943cf48d,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xea62d7e626d842ba53d32ec82a12e8d3943cf48d,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xea62d7e626d842ba53d32ec82a12e8d3943cf48d,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xea62d7e626d842ba53d32ec82a12e8d3943cf48d,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xf20a3e18ff616864fe6ae4191214ccd18c99c5d6,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xf20a3e18ff616864fe6ae4191214ccd18c99c5d6,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xf20a3e18ff616864fe6ae4191214ccd18c99c5d6,$1k-$2k avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xf20a3e18ff616864fe6ae4191214ccd18c99c5d6,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xf20a3e18ff616864fe6ae4191214ccd18c99c5d6,Daily Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xf20a3e18ff616864fe6ae4191214ccd18c99c5d6,less than 1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xf20a3e18ff616864fe6ae4191214ccd18c99c5d6,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
+ethereum,0xf4e57ac0b6ce2e6ca6577012d4ecc9a71eb114d5,1 week old DEX trader,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:43.396 UTC,trader_age,usage
+ethereum,0xf4e57ac0b6ce2e6ca6577012d4ecc9a71eb114d5,Uniswap User,dex,gentrexha,query,2022-12-21 00:00:00.000 UTC,2026-09-05 03:19:23.629 UTC,trader_platforms,persona
+ethereum,0xf4e57ac0b6ce2e6ca6577012d4ecc9a71eb114d5,Number of DEXs traded on: 1,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:18:55.162 UTC,trader_dex_diversity,usage
+ethereum,0xf4e57ac0b6ce2e6ca6577012d4ecc9a71eb114d5,<=$400 avg. DEX trade value,dex,gentrexha,query,2022-12-15 00:00:00.000 UTC,2026-09-05 03:13:55.947 UTC,average_trade_values,usage
+ethereum,0xf4e57ac0b6ce2e6ca6577012d4ecc9a71eb114d5,Contract Deployer,infrastructure,hildobby,query,2023-03-03 00:00:00.000 UTC,2026-09-05 03:14:39.518 UTC,contract_deployers,persona
+ethereum,0xf4e57ac0b6ce2e6ca6577012d4ecc9a71eb114d5,Sparse Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:19:20.397 UTC,trader_frequencies,usage
+ethereum,0xf4e57ac0b6ce2e6ca6577012d4ecc9a71eb114d5,DEX Trader,dex,gentrexha,query,2022-12-14 00:00:00.000 UTC,2026-09-05 03:14:59.038 UTC,dex_traders,persona
