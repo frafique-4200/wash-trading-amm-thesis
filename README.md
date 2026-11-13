@@ -1,6 +1,6 @@
 # Detecting and Quantifying Suspicious Wash Trading Activity in Automated Market Maker Decentralized Exchanges
 
-Research code, Dune SQL queries, and selected Dune CSV exports for a Bachelor's thesis in Applied Mathematics at **Hochschule Mittweida, Germany**.
+Research code, Dune SQL queries, selected Dune CSV exports, and 230 raw/processed research data files for a Bachelor's thesis in Applied Mathematics at **Hochschule Mittweida, Germany**.
 
 ## Project overview
 
@@ -89,13 +89,15 @@ Other saved files under `SQL/` document checks supporting the reduced replicatio
 
 The saved query files have a mixture of **`.txt`, `.sql`, and extensionless filenames**, while their exported result tables typically use **`.csv`**. These are research artifacts retained with their original filenames. The directory may also contain exploratory queries, diagnostic outputs, or incomplete/empty files; not every file is a standalone, production-ready query. Some R scripts submit queries to Dune through an API and may require authentication or changes to execute today.
 
-The CSV files stored here are **selected Dune exports**, not an assurance that every input and intermediate output needed by the full analysis has been published.
+The CSV files stored under `SQL/` are **selected Dune exports**. Additional input datasets, intermediate analysis files, and outputs are included under [`Data/`](Data/). The presence of these artifacts does not by itself establish that every step of the analysis can be reproduced without additional configuration or access.
 
 ## Repository organization
 
 | Location / filename pattern | Contents |
 | --- | --- |
 | [`SQL/`](SQL/) | Saved Dune queries, CSV exports, entity/MEV validation queries, and an additional-pools subfolder |
+| [`Data/raw/`](Data/raw/) | Source datasets and saved Dune query outputs used as inputs, including swap-event extracts and validation data |
+| [`Data/cleaned/`](Data/cleaned/) | Prepared and transformed data, intermediate detection artifacts, classification results, and comparison summaries |
 | `suspicious_pool_*.R`, `control_pool_*.R`, `suspicious_pool_full_pipeline.R` | Reduced replication for the initial pools |
 | `amm_replication_additional_pool_eco_usdt_*.R` | Reduced replication for ECO–USDT and its control |
 | `amm_replication_additional_pool_wcelo_*.R` | Reduced replication for WETH–wCELO and its control |
@@ -107,6 +109,24 @@ The CSV files stored here are **selected Dune exports**, not an assurance that e
 | `volume_matching.cpp` | Earlier C++ volume-matching implementation; **not the same as** the whole-component aggregate-balance criterion used in the main thesis adaptation |
 
 The three stages of the **reduced AMM replication** and the numbered processing steps of the **WTEYE adaptation** are distinct workflows.
+
+### Research datasets: `Data/raw/` and `Data/cleaned/`
+
+The repository includes **230 files** under [`Data/`](Data/), preserving the project's research inputs and saved outputs. These files were added in commit `b8684b7` (`Add thesis research datasets`). The distinction between the directories describes their **role in this project** rather than a guarantee that every `raw` file is an untouched blockchain export or that every `cleaned` file is a finalized publication dataset.
+
+| Directory | Contents | Examples |
+| --- | --- | --- |
+| [`Data/raw/`](Data/raw/) | Source records and saved query responses used during data preparation and validation: Uniswap V2 swap-event exports, token/decimal lookups, ETH-transfer and intermediary-label results, and validation cases. | `12A_eco_usdt_suspicious_pool_raw_swaps.csv`, `12B_eco_usdt_matched_control_pool_raw_swaps.csv`, `12C_wcelo_suspicious_pool_raw_swaps.csv`, `12D_wcelo_matched_control_pool_raw_swaps.csv` |
+| [`Data/cleaned/`](Data/cleaned/) | Prepared swap data and token flows, Stage 1 candidate windows, Stage 2 entity evidence, Stage 3 exclusion/classification evidence, WTEYE-based candidates, event-level labels, and cross-method comparison tables. This directory also includes supporting SQL and JSON artifacts from certain pipeline runs. | `uniswap_v2_suspicious_pool_cleaned.csv`, `amm_adaptation_input_suspicious_pool_token_flows.csv`, `amm_replication_additional_pool_eco_usdt_output_both_pools_stage3_final_reference_swaps.csv` |
+
+Examples of the relationship between research stages and saved data:
+
+- **Extraction:** Dune queries under `SQL/` produce blockchain-event or metadata exports, with analysis inputs stored under `Data/raw/`.
+- **Preparation and candidate generation:** R scripts read relevant extracted data and create cleaned swap records, token-movement representations, candidate groups, and balance checks in `Data/cleaned/`.
+- **Detection and validation:** Separate replication/adaptation scripts generate Stage 1–3 decisions or graph-based selections, with related evidence and validation files saved under `Data/cleaned/`.
+- **Method comparison:** Saved per-swap labels and summary tables support the comparison of the reduced Gan et al. replication and the WTEYE-based AMM adaptation.
+
+Not every dataset in `Data/cleaned/` is necessarily a final result. File names generally encode the pool, method, stage, and role (`input`, `output`, `summary`, `candidate`, or `comparison`), and the underlying R scripts remain the reference for how individual files were generated.
 
 ## Methodological parameters
 
@@ -127,15 +147,16 @@ The thesis reports **R 4.5.1** and **igraph 2.2.1** for the graph-based candidat
 
 A researcher attempting to reproduce the analysis should:
 
-1. Review the extraction conditions and saved queries in `SQL/` and, when needed, re-run the relevant SQL on Dune or use the corresponding CSV exports.
-2. Confirm the **pool contract address**, chronological event order, token identifiers, token decimal precision, and expected input-column structure.
-3. Configure file paths and dependencies referenced by the R scripts. Some scripts use local absolute paths beginning with `D:/Downloads/Bachelor Thesis/` and expect data under locations such as `Data/raw/` and `Data/cleaned/`.
-4. Run the reduced-replication and WTEYE-adaptation workflows **separately** for the same pool observations, following the relevant numbered scripts and their individual instructions.
-5. Compare event-level selections using the downstream analysis scripts, taking care to deduplicate overlapping candidate windows.
+1. Review the extraction conditions and saved queries in `SQL/`. Where appropriate, start from the corresponding files already included in `Data/raw/` rather than re-querying Dune. Re-run SQL queries only when validation or a fresh extraction is needed.
+2. Confirm the **pool contract address**, chronological event order, token identifiers, token decimal precision, and expected input-column structure before using those input files.
+3. Review the existing prepared data and saved outputs in `Data/cleaned/`, distinguishing inputs, intermediate artifacts, and final comparison tables. These can be used to inspect individual stages without necessarily running the entire pipeline.
+4. Configure file paths and dependencies referenced by the R scripts. Some scripts use local absolute paths beginning with `D:/Downloads/Bachelor Thesis/`; the published repository now keeps `Data/` inside its root alongside the R scripts, so local path settings may need adjustment.
+5. Run the reduced-replication and WTEYE-adaptation workflows **separately** for the same pool observations, following the relevant numbered scripts and their individual instructions.
+6. Compare event-level selections using the downstream analysis scripts, taking care to deduplicate overlapping candidate windows.
 
 Some comparison scripts check MD5 fingerprints of saved intermediate results. Replacing their expected inputs can cause those checks to fail even if the replacement data are otherwise well-formed.
 
-**Reproducibility status:** This repository preserves research code and numerous original Dune query/export artifacts, but **has not been verified as a self-contained, end-to-end, one-command replication package**. Additional data, token metadata, intermediate outputs, environment configuration, and/or Dune access may be required.
+**Reproducibility status:** This repository now preserves research code, Dune queries/exports, and 230 files of raw, prepared, and analysis-output data. However, it **has not been verified as a self-contained, end-to-end, one-command replication package**. Re-running particular scripts may still require path changes, R dependencies, external token metadata, API configuration, or Dune access; some saved intermediates may also be tied to earlier execution environments.
 
 ## Interpretation and limitations
 
@@ -152,6 +173,7 @@ The methods select overlapping but non-identical sets of potentially suspicious 
 - Cui, W., & Gao, C. (2023). *WTEYE: On-chain Wash Trade Detection and Quantification for ERC20 Cryptocurrencies*. *Blockchain: Research and Applications, 4*(1), 100108. https://doi.org/10.1016/j.bcra.2022.100108
 - Victor, F., & Weintraud, A. M. (2021). *Detecting and Quantifying Wash Trading on Decentralized Cryptocurrency Exchanges*. *Proceedings of The Web Conference 2021*. https://doi.org/10.1145/3442381.3449824
 
-## Repository URL
+## Repository URLs
 
-https://git.hs-mittweida.de/frafique/wash-trading-amm-thesis
+- HSMW GitLab: https://git.hs-mittweida.de/frafique/wash-trading-amm-thesis
+- Personal GitHub: https://github.com/frafique-4200/wash-trading-amm-thesis
