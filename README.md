@@ -177,3 +177,4 @@ The methods select overlapping but non-identical sets of potentially suspicious 
 
 - HSMW GitLab: https://git.hs-mittweida.de/frafique/wash-trading-amm-thesis
 - GitHub: https://github.com/frafique-4200/wash-trading-amm-thesis
+- SQL queries : https://dune.com/workspace/t/basilisk42004190/queries?publicness=public
